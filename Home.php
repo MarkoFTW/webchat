@@ -4,21 +4,16 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <meta charset="UTF-8">
-        <title>Bootstrap chat - Home</title>
+        <title>Webchat - Home</title>
         <script src="js/jquery211.js"></script>
-        <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="css/bootstrap.css">
-        <!-- Optional theme -->
-        <!--<link rel="stylesheet" href="css/bootstrap-theme.css">-->
-        <!-- Latest compiled and minified JavaScript -->
+        <link rel="stylesheet" href="css/bootstrap-theme.css">
         <script src="js/bootstrap.js"></script>
         <script src="js/functions.js"></script>
         <link rel="stylesheet" href="css/homeStyle.css">
         <script type="text/javascript">
             $(document).ready(function(){
                 $("#privMsg, #ChatMessages").animate({ scrollTop: "+=5000000" }, "slow");
-                //$(".testclass").html("<a href='Home.php?page=private'><p>Messages<img style='vertical-align:middle' src='http://png-2.findicons.com/files/icons/1676/primo/128/label_blue_new.png' height='25' width='25'/></p></a>");
-                //jQuery(".testclass[href$='Home.php?page=private']").after("<span style='margin-right:50px;'><img src='http://devps1.marefx.com/pma/themes/pmahomme/img/b_drop.png'><span/>");
             });
         </script>
         <?php
