@@ -1,0 +1,313 @@
+html, body{
+    //background-color: #303030;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    color: #0099CC;
+    background: #373737 url("../img/bg.png") 0 0 repeat;
+}
+.navbar-toggle {
+  width: 100%;
+  float: none;
+  margin-right: 0;
+}
+
+li>a{
+    transition:all 200ms;
+}
+li:hover{
+    background-color: #606060;
+    transition:all 100ms;
+}
+a.pmsg, a.pmsg:visited { 
+    text-decoration: none; 
+    color:white; 
+}
+a.pmsg:focus { text-decoration: none; color:yellow; }
+a.pmsg:hover, a.pmsg:active { text-decoration: none; color:black }
+
+
+
+a.onList:nth-of-type(2n) {
+    color: #0000FF;
+}
+
+a.onList:nth-of-type(2n+1) {
+    color: #66FF00;
+}
+a.onList:active, a.onList:hover, a.onList:focus{
+    text-decoration: none;
+}
+a.onList:hover{
+    color: white;
+}
+
+
+
+
+#ContMove{
+    margin-top: 50px;
+}
+
+label{
+    display: inline-block;
+    float: left;
+    clear: left;
+    width: 250px;
+    text-align: right;
+}
+label input[type=password] {
+  display: inline-block;
+  float: left;
+}
+.ChangeProf{
+    margin-left: 95px;
+}
+#profiles{
+    width: 500px;
+    margin: auto;
+}
+#profInfo{
+    float: right;
+    margin-right: 100px;
+}
+#profilepic{
+    float: right;
+    margin-right: 20px;
+}
+#delUser{
+    margin-left:95px;
+}
+
+.Time{
+    color: #B0B0B0;
+}
+.CreatingLogin{
+    text-align: center;
+}
+
+#BottomInput{
+    margin-top: -20px;
+}
+#shownew{
+    text-align: center;
+}
+
+#privMsg{
+    width: 500px;
+    height: 400px;
+    //background-color: red;
+    //border-bottom: 1px solid #333;
+    overflow-y: auto;
+    margin: auto;
+}
+.privText{
+    width: 496px;
+    height: 48px;
+    border-bottom: 1px solid #333;
+    background-color: #181818;
+    color: white;
+    resize: none;
+    border: 1px solid PaleTurquoise;
+    display: block;
+    margin: auto;
+}
+.inputSend{
+    display: block;
+    margin: auto;
+    width: 502px;
+    //background-color: green;
+}
+#contentDiv{
+    //background-color: red;
+    height: 700px;
+    width: 900px;
+    margin: auto;
+    margin-top: 10px;
+}
+
+#content, #content1{
+    //background-color: red;
+    //width:400px;
+   // margin: auto;
+}
+/*#firstmenu .content{
+    height: 50px;
+    width: 700px;
+    color: white;
+    //background-color: red;
+    //padding: 5px;
+    float: left;
+    font-size: 1em;
+    text-align: center;
+}*/
+
+#result{
+    position:absolute;
+    width:300px;
+    padding:10px;
+    display:none;
+    margin-top:-1px;
+    border-top:0px;
+    overflow:hidden;
+    border:1px #CCC solid;
+    background-color: white;
+}
+#result1{
+    margin-left: 455px;
+    position:absolute;
+    width:190px;
+    padding:10px;
+    display:none;
+    margin-top:-1px;
+    border-top:0px;
+    overflow:hidden;
+    border:1px #CCC solid;
+    background-color: white;
+}
+.show, .show1{
+    padding:10px; 
+    border-bottom:1px #999 dashed;
+    font-size:15px; 
+    height:50px;
+}
+.show:hover, .show1:hover{
+    background:#4c66a4;
+    color:#FFF;
+    cursor:pointer;
+}
+.ChatMessagesS{
+    white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    white-space: pre-wrap;       /* css-3 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+    word-break: break-all;
+    white-space: normal;
+    color: whitesmoke;
+}
+#ChatText{
+    width: 687px;
+    height: 49px;
+    border-bottom: 1px solid #333;
+    background-color: #181818;
+    color: white;
+    resize: none;
+    border-bottom: thick solid #0099CC;
+    border-left: thick solid #0099CC;
+    //border: 1px solid PaleTurquoise;
+}
+#ChatText:focus{
+    outline: none;
+}
+#ChatMessages{
+    width: 688px;
+    height: 600px;
+    //border-bottom: 1px solid #333;
+    overflow: auto;
+    border-left: thick solid #0099CC;
+}
+.UserNameS{
+    color: #0099CC;
+    text-shadow: 2px 5px 5px black;
+    font-family: 'IM Fell DW Pica', serif;
+}
+.says{
+    color: whitesmoke;
+}
+
+#ChatBig{
+    width: 700px;
+    height: 600px;
+    //border: 1px solid #000;
+    //margin: auto;
+    margin-left: 180px;
+}
+#ListOnlineUsers{
+    width: 96px;
+    height: 625px;
+    //border-bottom: 1px solid #333;
+    overflow: auto;
+    //float: right;
+    background-color: #606060;
+   // margin-left:auto; 
+   // margin-right:0;
+   // margin-top: -450px;
+    //font-family: 'IM Fell DW Pica', serif;
+}
+#OnlineList{
+    //background-color: #484848;
+    background: #373737 url("../img/bg.png") 0 0 repeat;
+    color: #0099CC;
+    width: 100px;
+    height: 650px;
+    border-right: thick solid #0099CC;
+    border-bottom: thick solid #0099CC; 
+    //border-bottom: 1px solid #333;
+    //overflow: auto;
+    //float: right;
+    margin-left:-108px; 
+    //margin-right:0px;
+    //margin-top: -450px;
+}
+
+#ResetPass{
+    margin-top: 50px;
+}
+
+@media(max-width:767px){
+   .says{
+        color: yellow;
+    }
+    #ChatBig{
+        margin-left: -6px;
+    }
+    #ChatBig, #ChatMessages{
+        width: 290px;
+        height: 300px;
+    }
+    #ChatText{
+        width: 290px;
+        border-right: thick solid #0099CC;
+    }
+    #ListOnlineUsers{
+        width: 280px;
+        height: 100px;
+    }
+    #OnlineList{
+        width: 290px;
+        height: 130px;
+        border-left: thick solid #0099CC;
+        border-top: thick solid #0099CC;
+        margin-left: -259px;
+        margin-top: 349px;
+    }
+}
+@media(min-width:768px) and (max-width:991px){
+    .says{
+        color: blue;
+    }
+    #ChatBig, #ChatMessages{
+        width: 337px;       
+    }
+    #ChatText{
+        width: 337px;
+        margin-bottom: 200px;
+    }
+    #OnlineList, #ChatBig, #ChatMessages{
+        margin-top: 50px;
+    }
+}
+@media(min-width:992px) and (max-width:1200px){
+    .says{
+        color: red;
+    }
+    #ChatBig, #ChatMessages, #ChatText{
+        width: 520px;
+    }
+}
+@media(min-width:1200px){
+    .says{
+        color: purple;
+    }
+}
