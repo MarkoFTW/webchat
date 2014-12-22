@@ -1,26 +1,25 @@
 <?php
+ini_set('display_errors',"1");
+session_start();
+include "class.php";
 
-    session_start();
-    include 'class.php';
-    
-    if(isset($_POST['OldPassword']) && isset($_POST['NewPassword']) && isset($_POST['NewPassword1'])) {
-        if (trim($_POST['OldPassword']) != "" || trim($_POST['NewPassword']) != "" || trim($_POST['NewPassword1']) != ""){
-            if(trim($_POST['NewPassword']) == trim($_POST['NewPassword1'])){
-                $user = new user();
-                $user->setUserID($_SESSION['UserID']);
-                $user->setOldPassword(sha1($_POST['OldPassword']));
-                $user->setPassword(sha1($_POST['NewPassword']));
-                $user->setPassword1(sha1($_POST['NewPassword1']));
-                $user->ChangePass();
-            } else {
-                echo "New passwords do not match!";
-            }
+if(isset($_POST['passwordCurr']) && isset($_POST['password1']) && isset($_POST['password2'])) {
+    if (trim($_POST['passwordCurr']) != "" || trim($_POST['password1']) != "" || trim($_POST['password2']) != ""){
+        if(trim($_POST['password1']) == trim($_POST['password2'])){
+            $user = new user();
+            $user->setUserID($_SESSION['UserID']);
+            $user->setOldPassword(sha1($_POST['passwordCurr']));
+            $user->setPassword(sha1($_POST['password1']));
+            $user->setPassword1(sha1($_POST['password2']));
+            $user->ChangePass();
         } else {
-            echo "Empty fields!";
-            header("Location: ../Home.php?page=profile&error=1");
+            echo "New passwords do not match!";
+            header("Location: ../index.php?p=profile&a=settings&error=5");
         }
     } else {
-        echo "Error.";
+        echo "Empty fields!";
+        header("Location: ../index.php?p=profile&a=settings&error=4");
     }
-
-?>
+} else {
+    echo "Error.";
+}

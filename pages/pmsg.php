@@ -39,7 +39,6 @@ if(isset($_GET['do']) && $_GET['do'] == "show" && isset($_GET['hash'])){
         $convo->setRecptID($_GET['user']);
         $convo->CheckValidConvo("no");
     ?>
-
 <form method="POST">
     <?php
     if(isset($_POST['message']) && !empty($_POST['message'])){

@@ -127,7 +127,7 @@ class user{
             try {
                 $this->FindCountry($this->getIP());
                 include "conn.php";
-                $req = $stmt->prepare("INSERT INTO users(Username,Email,Password,Access,IP_ADDR,Country,Type,Created) VALUES (:Username,:Email,:Password,:Access,:ip,:country,:type,NOW())");
+                $req = $stmt->prepare("INSERT INTO users(Username,Email,Password,Access,IP_ADDR,Country,Type,Created,Birthday,Last_seen,Gender) VALUES (:Username,:Email,:Password,:Access,:ip,:country,:type,NOW(),NOW(),NOW(),:g)");
                 $req->execute(array(
                     'Username' => $this->getUsername(),
                     'Email' => $this->getEmail(),
@@ -135,8 +135,10 @@ class user{
                     'Access' => "1",
                     'ip' => $this->getIP(),
                     'country' => $this->getCountry(),
-                    'type' => "1"
+                    'type' => "1",
+                    'g' => "0"
                     ));
+ 
                 header("Location: ../index.php?success=1");
             }  catch (PDOException $e) {
                 echo $e->getMessage();
@@ -156,7 +158,7 @@ class user{
                 'ip' => $this->getIP(),
                 'country' => $this->getCountry(),
                 'type' => "2"
-				));
+                ));
         }  catch (PDOException $e) {
             echo $e->getMessage();
         }
@@ -228,6 +230,23 @@ class user{
         }
     }
     
+    public function ChangeEmail(){
+        include 'conn.php';
+        $ChangePW = $stmt->prepare("SELECT * FROM users WHERE UserID = :UserID");
+        $ChangePW->execute(array('UserID' => $this->getUserID()));
+        $PWInfo = $ChangePW->fetch();
+        if($this->getOldPassword() == $PWInfo['Password']){
+            $newpw = $stmt->prepare("UPDATE users SET Email = :NewEmail WHERE UserID = :UserID");
+            $newpw->execute(array(
+                'UserID' => $this->getUserID(),
+                'NewEmail' => $this->getPassword()
+            ));
+            header("Location: ../Home.php?p=profile&a=settings&success=2");
+        } else {
+            header("Location: ../Home.php?p=profile&a=settings&error=1");
+        }
+    }
+    
     public function CheckAdmin(){
         include 'conn.php';
         $CheckAdmin = $stmt->prepare("SELECT * FROM users WHERE UserID = :UserID");
@@ -264,25 +283,13 @@ class user{
         }
     }
     
-    public function viewProfile(){
+    public function findID($a) {
         include 'conn.php';
-        $viewProfile = $stmt->prepare("SELECT * FROM users WHERE Username = :user");
-        $viewProfile->execute(array('user' => $this->getProfile()));
-        $rows = $viewProfile->rowCount();
-        if ($rows == 1){
-            while($view1 = $viewProfile->fetch()){
-                echo "<div id=profiles><div id='profInfo'>Viewing profile from ".$view1['Username']."<br/>";
-                echo "Email: ". $view1['Email'] ."<br/>";
-                echo "From: ". $view1['Country'] ."<br/>";
-                echo "<form action='Home.php' method='get'>";
-                echo "<input type='hidden' name='page' value='private'>";
-                echo "<input type='hidden' name='do' value='new'>";
-                echo "<input type='hidden' name='user' value='".$view1['UserID']."'>";
-                echo "<input type='submit' value='Send message'/>";
-                echo "</form></div>";
-                $this->ProfilePic($view1['UserID']);
-            }
-        } else { echo "No user found."; }
+        $findID = $stmt->prepare("SELECT * FROM users WHERE Username = :user");
+        $findID->execute(array('user' => $a));
+        while($u = $findID->fetch()){
+            $this->setProfile($u['UserID']);
+        }
     }
     
     public function delUser(){
@@ -324,10 +331,14 @@ class user{
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
         $db = curl_exec($ch);
+        //$info = curl_getinfo($ch);
+        //print_r($info);
+        //print_r($db);
+
         preg_match('/country:        ([a-zA-Z0-9 ]*)/',$db,$matchme);
         $this->setCountry($matchme[1]);
     }
-    public function ProfilePic($picid){
+   public function ProfilePic($picid){
         $ext = array("jpg", "png", "jpeg", "gif");
         $tmp = "";           
         foreach($ext as $a){
@@ -358,11 +369,12 @@ class user{
                 break;
             }
         }
-        if($ver == "1") {
+        if($ver == "1") { //Home.php, searchUsers.php, profile.php = 1
             $img = "./img/users/".$picid."/profile.".$tmp;
-        } else {
+        } else { //ProfileResult.php
             $img = "../img/users/".$picid."/profile.".$tmp;
         }
+        
         if (file_exists($img)){
             echo "./img/users/".$picid."/profile.".$tmp;
         } else {
@@ -370,6 +382,83 @@ class user{
         }
     }
 }
+
+class Profile {
+    private $UserID2, $Email1;
+    
+    public function getUserID2(){
+        return $this->UserID2;
+    }
+    public function setUserID2($UserID2){
+        $this->UserID2 = $UserID2;
+    }
+
+    public function getEmail1(){
+        return $this->Email1;
+    }
+    public function setEmail1($Email1){
+        $this->Email1 = $Email1;
+    }
+    public function overGroup($num){
+        if($num == 999){
+            return "Owner";
+        } elseif($num == 950){
+            return "Administrator";
+        } elseif($num == 888){
+            return "Moderator";
+        }else{
+            return "Member";
+        }
+    }
+    public function overGender($g){
+        if($g == 1){
+            return "Male";
+        } elseif($g == 2){
+            return "Female";
+        } else {
+            return "Alien";
+        }
+    }
+    public function showFullProfile($username){
+        include 'conn.php';
+        $showFull = $stmt->prepare("SELECT * FROM users WHERE Username = :uid");
+        $showFull->execute(array(
+            "uid" => $username
+            ));
+        while($p = $showFull->fetch()){
+
+            $age = floor((time() - strtotime($p['Birthday'])) / 31556926);
+
+            $dt = explode(" ", $p['Created']);
+            $memdt = explode("-", $dt[0]);
+            $monthName = date("F", mktime(0, 0, 0, $memdt[1], 10));
+
+            $o = explode(" ", $p['Last_seen']);
+            $on = explode("-", $o[0]);
+            $onl = explode(":", $o[1]);
+            if (strtotime($p['Last_seen']) >= strtotime("today")){
+                $last = "Today, " . $onl[0] .":".$onl[1];
+            }elseif (strtotime($p['Last_seen']) >= strtotime("yesterday")){
+                $last = "Yesterday, " . $onl[0] .":".$onl[1];
+            } else {
+                $omonth = date("F", mktime(0, 0, 0, $on[1], 10));
+                $last = $omonth." ".$on[2]." ".$on[0].", ".$onl[0].":".$onl[1];
+            }
+
+            $b = explode("-", $p['Birthday']);
+            $bmonthName = date("F", mktime(0, 0, 0, $b[1], 10));
+
+            echo "<br/><b>Member since</b> " . $memdt[2]. " ".$monthName." ". $memdt[0];
+            echo "<br/><b>Last active</b> " . $last;
+            echo "<br/><br/><b>Group</b>: " . $this->overGroup($p['Access']);
+            echo "<br/><b>Country</b>: " . $p['Country'];
+            echo "<br/><b>Age</b>: " . $age;
+            echo "<br/><b>Birthday</b>: " . $bmonthName. " ".$b[2].", " . $b[0];
+            echo "<br/><b>Gender</b>: " . $this->overGender($p['Gender']);  
+        }
+    }
+}
+
 
 class mail{
     private $Email,$Message,$Subject,$Headers,$UserID,$Username;
@@ -466,8 +555,8 @@ class msgs{
         if($rowCheck == 0){
             if($new == "yes") {
                 $this->CreateConvo();
-                echo "Creating new conversation.";
-                header("Location: Home.php?page=private&do=show&hash=" . $this->getHash());
+                echo "<span class='text-center'>Creating new conversation. Message successfully sent!</span><br/>";
+                //header("Location: Home.php?page=private&do=show&hash=" . $this->getHash());
             }
         } else {
             $this->setHash($getHash['hash']);
@@ -548,12 +637,10 @@ class msgs{
                 $ura = date('H:i',strtotime($novidatumura[1]));
             
                 $datumexpl = explode(".", $datum);
-                //datetime format
                 echo "<p><a class='pmsg' href='Home.php?page=profile&view=".$user_get['Username']."'>". $user_get['Username'] ." </a><span style='font-size: 10px;'>". $datumexpl[2] . " " . $mesec[$datumexpl[1]] . " " . $datumexpl[0] . " @ " . $ura ."</span><br/>". censorReplace(BBCodes(smileys(htmlspecialchars($get_msg['message'])))) ."<br/></p>";
             }else{ echo "Access denied for this conversation."; }
         }
     }
-	
     public function findHash($hash) {
         include 'conn.php';
         
@@ -566,6 +653,7 @@ class msgs{
         } else {
             return false;
         }
+        
     }
     
     public function checkHash($hash){
@@ -631,7 +719,6 @@ class chat{
             $novidatumura = explode(" ", $ChatData['Time']);
             $datum = str_replace('-', '.', $novidatumura[0]);
             $ura = date('H:i',strtotime($novidatumura[1]));
-            
             ?>
             <span class="Time"><?php echo $ura . " "; ?></span><span class="UserNameS"><?php echo $DataUser['Username']; ?></span><span class="says"> says:</span><br/>
             <span class="ChatMessagesS"><?php echo censorReplace(BBCodes(smileys(htmlspecialchars($ChatData['Message'])))); ?></span><br/>

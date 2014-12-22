@@ -1,19 +1,23 @@
 <!DOCTYPE html>
-
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <meta charset="UTF-8">
         <title>Webchat - Home</title>
         <script src="js/jquery211.js"></script>
+        <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="css/bootstrap.css">
+        <!-- Optional theme -->
         <link rel="stylesheet" href="css/bootstrap-theme.css">
+        <!-- Latest compiled and minified JavaScript -->
         <script src="js/bootstrap.js"></script>
         <script src="js/functions.js"></script>
         <link rel="stylesheet" href="css/homeStyle.css">
         <script type="text/javascript">
             $(document).ready(function(){
                 $("#privMsg, #ChatMessages").animate({ scrollTop: "+=5000000" }, "slow");
+                //$(".testclass").html("<a href='Home.php?page=private'><p>Messages<img style='vertical-align:middle' src='http://png-2.findicons.com/files/icons/1676/primo/128/label_blue_new.png' height='25' width='25'/></p></a>");
+                //jQuery(".testclass[href$='Home.php?page=private']").after("<span style='margin-right:50px;'><img src='http://devps1.marefx.com/pma/themes/pmahomme/img/b_drop.png'><span/>");
             });
         </script>
         <?php
@@ -110,32 +114,12 @@
                         include 'pages/searchUsers.php'; 
                     } elseif(isset($_GET['page']) && $_GET['page'] == "admincp"){
                         include 'pages/admincp.php';
-                        //echo "admincp";
                     } else {
 
                     ?>
-                
-                
+                   
                 <div class="col-xs-10">
                     <div id="ChatBig">
-                        <?php
-                            if(isset($_GET['success']) && $_GET['success'] == 1){
-                        ?>
-                        <p>
-                            <span style="color:green">Password sucessfully changed</span>
-                        </p>                 
-                        <?php
-                            }
-                        ?>
-                        <?php
-                            if(isset($_GET['error']) && $_GET['error'] == 1){
-                        ?>
-                        <p>
-                            <span style="color:red">Wrong password</span>
-                        </p>                 
-                        <?php
-                            }
-                        ?>
                         <div id="ChatMessages">
                         </div>
                         <textarea id="ChatText" name="Message" placeholder="Enter message..."></textarea>
@@ -154,6 +138,59 @@
                 </div>
                 
             </div>
+
+            <?php
+                if(isset($_GET['success']) && $_GET['success'] == 1){
+            ?>
+            <p>
+                <span style="color:green">Password sucessfully changed</span>
+            </p>                 
+            <?php
+                } elseif(isset($_GET['error']) && $_GET['error'] == 1){
+            ?>
+            <p>
+                <span style="color:red">Wrong password</span>
+            </p>                 
+            <?php
+                } elseif(isset($_GET['success']) && $_GET['success'] == 2){
+            ?>
+            <p>
+                <span style="color:green">Email sucessfully changed</span>
+            </p>        
+             <?php
+                } elseif(isset($_GET['error']) && $_GET['error'] == 2){
+            ?>
+            <p>
+                <span style="color:red">Wrong password</span>
+            </p>             
+            <?php
+                } elseif(isset($_GET['success']) && $_GET['success'] == 3){
+            ?>
+            <p>
+                <span style="color:green">Display picture successfully changed</span>
+            </p>             
+            <?php
+                } elseif(isset($_GET['error']) && $_GET['error'] == 3){
+            ?>
+            <p>
+                <span style="color:red">Wrong password</span>
+            </p> 
+            <?php
+                } elseif(isset($_GET['error']) && $_GET['error'] == 4){
+            ?>
+            <p>
+                <span style="color:red">Empty fields</span>
+            </p>            
+            <?php
+                } elseif(isset($_GET['error']) && $_GET['error'] == 5){
+            ?>
+            <p>
+                <span style="color:red">Password or Email is not matching</span>
+            </p>            
+            <?php
+                } 
+            ?>
+   
             
         </div>
         

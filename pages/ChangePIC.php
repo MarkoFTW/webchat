@@ -21,10 +21,12 @@ function checkPic(){
     $extensions = array("gif", "jpeg", "jpg", "png");
     $name = $_POST['UserID'];
     foreach ($extensions as $ext) { 
-        if (file_exists('../img/users/'.$name.'profile.' . $ext)) { 
+        if (file_exists('../img/users/'.$name.'/profile.' . $ext)) { 
             unlink('../img/users/'.$name.'/profile.' . $ext);
             return true;          
-        } 
+        } else {
+            return false;
+        }
     }  
 }
 
@@ -41,9 +43,11 @@ if ((in_array($_FILES['file']['type'], $mime))
     if(checkPic()){
       echo $_FILES["file"]["name"] . " already exists. ";
       move_uploaded_file($_FILES["file"]["tmp_name"], "../img/users/".$_POST['UserID']."/profile.".$extension);
+      chmod("../img/users/".$_POST['UserID']."/profile.".$extension, 0777);
       header("Location: ../Home.php?page=profile&success=1");
     } else {
       move_uploaded_file($_FILES["file"]["tmp_name"], "../img/users/".$_POST['UserID']."/profile.".$extension);
+      chmod("../img/users/".$_POST['UserID']."/profile.".$extension, 0777);
       echo "Stored in: " . "img/users/".$_POST['UserID']."/" . $_FILES["file"]["name"];
       header("Location: ../Home.php?page=profile&success=1");
     }
