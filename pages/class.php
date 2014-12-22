@@ -1,5 +1,5 @@
 <?php
-function BBCodes($text) {
+function BBCodes($text) { //Home.php->class-chat, pmsg.php->class
     $bb_codes = array(
         "/\[u\](.*?)\[\/u\]/is" => "<u>$1</u>",
         "/\[i\](.*?)\[\/i\]/is" => "<i>$1</i>",
@@ -13,7 +13,7 @@ function BBCodes($text) {
     return $text;
 }
 
-function smileys($msg){
+function smileys($msg){//Home.php->class-chat, pmsg.php->class
     include 'conn.php';
     $emoteQuery = $stmt->prepare("SELECT * FROM emoticons");
     $emoteQuery->execute();
@@ -23,7 +23,7 @@ function smileys($msg){
     return $msg;
 }
 
-function censorReplace($text) {
+function censorReplace($text) {//Home.php->class-chat, pmsg.php->class
     include 'conn.php';
     $censorQuery = $stmt->prepare("SELECT * FROM censor");
     $censorQuery->execute();
@@ -33,7 +33,7 @@ function censorReplace($text) {
     return $text;
 }
 
-function checkFBexist($id) {
+function checkFBexist($id) { //index.php
     include 'conn.php';
     $check_fb = $stmt->prepare("SELECT * FROM users WHERE Email = :my_id AND Type = :type");
     $check_fb->execute(array(
@@ -47,6 +47,13 @@ function checkFBexist($id) {
             return false;
         }
     }
+}
+function last_active($i){ //class
+    include 'conn.php';
+    $la = $stmt->prepare("UPDATE users SET Last_seen = NOW() WHERE UserID = :id");
+    $la->execute(array(
+        'id' => $i
+    ));
 }
         
 class user{
@@ -122,7 +129,7 @@ class user{
         $this->Profile = $Profile;
     }
     
-    public function InsertUser(){
+    public function InsertUser(){ //InsertUser.php
         if($this->getPassword() == $this->getPassword1()) {
             try {
                 $this->FindCountry($this->getIP());
@@ -146,7 +153,7 @@ class user{
         } else { header("Location: ../index.php?error=2"); }
     }
     
-    public function InsertUserFB(){
+    public function InsertUserFB(){//InsertUser.php
         try {
             $this->FindCountry($this->getIP());
             include "conn.php";
@@ -164,7 +171,7 @@ class user{
         }
     }
 
-    public function UserLogin(){
+    public function UserLogin(){//UserLogin.php
         include "conn.php";
         $req = $stmt->prepare("SELECT * FROM users WHERE Email=:Email AND Password=:Password");
         $req->execute(array(
@@ -183,13 +190,15 @@ class user{
                 $this->setEmail($data['Email']);
                 $this->setType("1");
                 
+                last_active($this->getUserID());
+                
                 header("Location: ../Home.php");
                 return true;
             }
         }
     }
     
-    public function UserLoginFB(){
+    public function UserLoginFB(){//UserLogin.php
         include "conn.php";
         $req = $stmt->prepare("SELECT * FROM users WHERE Email=:id AND Type = :type");
         $req->execute(array(
@@ -207,13 +216,15 @@ class user{
                 $this->setEmail($data['Email']);
                 $this->setType("2");
                 
+                last_active($this->getUserID());
+                
                 header("Location: Home.php");
                 return true;
             }
         }
     }
     
-    public function ChangePass(){
+    public function ChangePass(){//Resetpass.php
         include 'conn.php';
         $ChangePW = $stmt->prepare("SELECT * FROM users WHERE UserID = :UserID");
         $ChangePW->execute(array('UserID' => $this->getUserID()));
@@ -230,7 +241,7 @@ class user{
         }
     }
     
-    public function ChangeEmail(){
+    public function ChangeEmail(){//ResetEmail.php
         include 'conn.php';
         $ChangePW = $stmt->prepare("SELECT * FROM users WHERE UserID = :UserID");
         $ChangePW->execute(array('UserID' => $this->getUserID()));
@@ -247,7 +258,7 @@ class user{
         }
     }
     
-    public function CheckAdmin(){
+    public function CheckAdmin(){ //profile.php, Home.php, admincp.php
         include 'conn.php';
         $CheckAdmin = $stmt->prepare("SELECT * FROM users WHERE UserID = :UserID");
         $CheckAdmin->execute(array('UserID' => $this->getUserID()));
@@ -259,7 +270,7 @@ class user{
         }
     }
 
-    public function FindEmail(){
+    public function FindEmail(){ //InsertUser.php
         include 'conn.php';
         $findEmail = $stmt->prepare("SELECT * FROM users WHERE Email = :mail");
         $findEmail->execute(array('mail' => $this->getEmail()));
@@ -271,7 +282,7 @@ class user{
         }
     }
     
-    public function FindUsername(){
+    public function FindUsername(){//InsertUser.php
         include 'conn.php';
         $findUsername = $stmt->prepare("SELECT * FROM users WHERE Username = :user");
         $findUsername->execute(array('user' => $this->getUsername()));
@@ -283,7 +294,7 @@ class user{
         }
     }
     
-    public function findID($a) {
+    public function findID($a) { //class->profile.php
         include 'conn.php';
         $findID = $stmt->prepare("SELECT * FROM users WHERE Username = :user");
         $findID->execute(array('user' => $a));
@@ -292,7 +303,7 @@ class user{
         }
     }
     
-    public function delUser(){
+    public function delUser(){//class->profile.php
         include 'conn.php';
         $viewProfile = $stmt->prepare("SELECT * FROM users WHERE Username = :user");
         $viewProfile->execute(array('user' => $this->getProfile()));
@@ -309,7 +320,7 @@ class user{
         } else { /*echo "No user found.";*/ }
     }
     
-    public function removeUser(){
+    public function removeUser(){//class->profile.php
         include 'conn.php';
         $rem = $stmt->prepare("SELECT * FROM users WHERE UserID = :uid");
         $rem->execute(array('uid' => $this->getProfile()));
@@ -323,7 +334,7 @@ class user{
         }
     }
     
-    public function FindCountry($ip){
+    public function FindCountry($ip){ //class
         $url = 'http://viewdns.info/whois/?domain='.$ip;
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.001 (windows; U; NT4.0; en-US; rv:1.0) Gecko/25250101');
@@ -338,7 +349,7 @@ class user{
         preg_match('/country:        ([a-zA-Z0-9 ]*)/',$db,$matchme);
         $this->setCountry($matchme[1]);
     }
-   public function ProfilePic($picid){
+   public function ProfilePic($picid){ //profile.php->change pic
         $ext = array("jpg", "png", "jpeg", "gif");
         $tmp = "";           
         foreach($ext as $a){
@@ -355,7 +366,7 @@ class user{
             echo "<div id='profilepic'><img alt='profile' height='150' width='150' src='http://www.madisonfund.org/wp-content/uploads/2011/06/Empty-Face.jpg'/></div>";
         }
     }
-    public function FindPic($picid, $ver){
+    public function FindPic($picid, $ver){//Home.php, searchUsers.php, profile.php, ProfileResult.php
         $ext = array("jpg", "png", "jpeg", "gif");
         $tmp = "";           
         foreach($ext as $a){
@@ -383,7 +394,7 @@ class user{
     }
 }
 
-class Profile {
+class Profile { //profile.php
     private $UserID2, $Email1;
     
     public function getUserID2(){
@@ -460,7 +471,7 @@ class Profile {
 }
 
 
-class mail{
+class mail{ //index.php -> ForgotPassword
     private $Email,$Message,$Subject,$Headers,$UserID,$Username;
     
     public function getEmail(){
@@ -543,7 +554,7 @@ class msgs{
         $this->Hash = $Hash;
     }
     
-    public function CheckValidConvo($new){
+    public function CheckValidConvo($new){ //pmsg.php
         include 'conn.php';
         $CheckValidConvo = $stmt->prepare("SELECT hash FROM private_msg_groups WHERE user_one = :my_id AND user_two = :user OR user_one = :user AND user_two = :my_id");
         $CheckValidConvo->execute(array(
@@ -564,7 +575,7 @@ class msgs{
         }
     }
     
-    public function CreateConvo(){
+    public function CreateConvo(){ //pmsg.php
         include 'conn.php';
         $this->setHash(rand());
         $CreateConvo = $stmt->prepare("INSERT INTO private_msg_groups(user_one,user_two,hash) VALUES(:user_one,:user_two,:hash)");
@@ -575,7 +586,7 @@ class msgs{
         ));
     }
     
-    public function InsertConvoMsg(){
+    public function InsertConvoMsg(){ //pmsg.php
         include 'conn.php';
         $InsertConvoMsg = $stmt->prepare("INSERT INTO private_msg(group_hash,from_id,message,msg_time) VALUES(:group_hash,:from_id,:message,NOW())");
         $InsertConvoMsg->execute(array(
@@ -585,7 +596,7 @@ class msgs{
         ));
     }
     
-    public function ShowAllConvos(){
+    public function ShowAllConvos(){ //pmsg.php
         include 'conn.php';
         $ShowAllConvos = $stmt->prepare("SELECT hash, user_one, user_two FROM private_msg_groups WHERE user_one = :my_id OR user_two = :my_id");
         $ShowAllConvos->execute(array('my_id' => $this->getUserID()));
@@ -607,7 +618,7 @@ class msgs{
         }     
     }
     
-    public function DisplayConvo() {
+    public function DisplayConvo() { //pmsg.php
         include 'conn.php';
         $DisplayConvo = $stmt->prepare("SELECT * FROM private_msg WHERE group_hash = :hash");
         $DisplayConvo->execute(array('hash' => $this->getHash()));
@@ -641,7 +652,7 @@ class msgs{
             }else{ echo "Access denied for this conversation."; }
         }
     }
-    public function findHash($hash) {
+    public function findHash($hash) { //class, pmsg.php
         include 'conn.php';
         
         $check_hash = $stmt->prepare("SELECT * FROM private_msg_groups WHERE hash = :hash");
@@ -656,7 +667,7 @@ class msgs{
         
     }
     
-    public function checkHash($hash){
+    public function checkHash($hash){ //class
         include 'conn.php';
         if($this->findHash($hash)){
             $check_hash = $stmt->prepare("SELECT * FROM private_msg_groups WHERE hash = :hash AND user_one = :my_id OR user_two = :my_id");
@@ -677,7 +688,7 @@ class msgs{
 }
 
 
-class chat{
+class chat{ //Home.php
     private $ChatID, $MsgUserID, $Message;
     
     public function getChatID(){
