@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
     $.urlParam = function(name){
         var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
         if (results===null){
@@ -7,6 +8,8 @@ $(document).ready(function(){
             return results[1] || 0;
         }	
     }
+      
+      
       
     $("#inputSend").click(function(){
         var empty = false;
@@ -29,7 +32,7 @@ $(document).ready(function(){
 
         if (empty) {
             alert("Empty message");
-        }
+        } 
     });
      
       
@@ -52,6 +55,65 @@ $(document).ready(function(){
         $.post( "pages/UserLogout.php", { submitlogout:userID }, function(){
             window.open('index.php', '_self');
         });
+    });
+
+
+
+
+    $("input[type=password]").not("#passwordCurr, #passwordCurrE").keyup(function(){
+        var ucase = new RegExp("[A-Z]+");
+	var lcase = new RegExp("[a-z]+");
+	var num = new RegExp("[0-9]+");
+	
+	if($("#password1").val().length >= 8){
+            $("#8char").removeClass("glyphicon-remove");
+            $("#8char").addClass("glyphicon-ok");
+            $("#8char").css("color","#00A41E");
+	}else{
+            $("#8char").removeClass("glyphicon-ok");
+            $("#8char").addClass("glyphicon-remove");
+            $("#8char").css("color","#FF0004");
+	}
+	
+	if(ucase.test($("#password1").val())){
+            $("#ucase").removeClass("glyphicon-remove");
+            $("#ucase").addClass("glyphicon-ok");
+            $("#ucase").css("color","#00A41E");
+	}else{
+            $("#ucase").removeClass("glyphicon-ok");
+            $("#ucase").addClass("glyphicon-remove");
+            $("#ucase").css("color","#FF0004");
+	}
+	
+	if(lcase.test($("#password1").val())){
+            $("#lcase").removeClass("glyphicon-remove");
+            $("#lcase").addClass("glyphicon-ok");
+            $("#lcase").css("color","#00A41E");
+	}else{
+            $("#lcase").removeClass("glyphicon-ok");
+            $("#lcase").addClass("glyphicon-remove");
+            $("#lcase").css("color","#FF0004");
+	}
+	
+	if(num.test($("#password1").val())){
+            $("#num").removeClass("glyphicon-remove");
+            $("#num").addClass("glyphicon-ok");
+            $("#num").css("color","#00A41E");
+	}else{
+            $("#num").removeClass("glyphicon-ok");
+            $("#num").addClass("glyphicon-remove");
+            $("#num").css("color","#FF0004");
+	}
+	
+	if($("#password1").val() === $("#password2").val()){
+            $("#pwmatch").removeClass("glyphicon-remove");
+            $("#pwmatch").addClass("glyphicon-ok");
+            $("#pwmatch").css("color","#00A41E");
+	}else{
+            $("#pwmatch").removeClass("glyphicon-ok");
+            $("#pwmatch").addClass("glyphicon-remove");
+            $("#pwmatch").css("color","#FF0004");
+	}
     });
 
     ////////////////////////////////////////////
@@ -175,6 +237,10 @@ $(document).ready(function(){
         $("#ChatMessages").load("pages/DisplayMessages.php");
     },1500);
 
+    /*setInterval(function(){
+        $("#ListOnlineUsers").load("pages/DisplayUsers.php");
+    },5000);*/
+
     $("#ChatMessages").load("pages/DisplayMessages.php");
     $("#ListOnlineUsers").load("pages/DisplayUsers.php");
     $("#hiddenOnline").load("pages/OnlineUsers.php");
@@ -196,12 +262,14 @@ $(document).ready(function(){
             $("#result1").html(html).show();
         });
     });
+    //$("#result").on("click",function(e){ 
     $("#result1").click(function(e){ 
         var $clicked = $(e.target);
         var $name = $clicked.find('.name1').html();
         var decoded = $("<div/>").html($name).text();
         $('#searchid1').val(decoded);
     });
+    //$(document).on("click", function(e) { 
     $(document).click(function(e) {
         var $clicked = $(e.target);
         if (! $clicked.hasClass("search1")){
@@ -211,4 +279,8 @@ $(document).ready(function(){
     $('#searchid1').click(function(){
         $("#result1").fadeIn();
     });
+    
+    
+    
+    
 });  

@@ -100,4 +100,10 @@ $(document).ready(function() {
         options1.series[0].data = json;
         chart = new Highcharts.Chart(options1);
     });
+
+
+
+
+
+
 });   

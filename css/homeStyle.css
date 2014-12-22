@@ -1,9 +1,7 @@
 html, body{
     //background-color: #303030;
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
+    padding-top: 25px;
+    margin-bottom: 50px;
     color: #0099CC;
     background: #373737 url("../img/bg.png") 0 0 repeat;
 }
@@ -45,12 +43,11 @@ a.onList:hover{
 
 
 
-
-#ContMove{
-    margin-top: 50px;
+#sidebar1, #profilepic, .ChangeProf{
+    margin-top: 20px;
 }
 
-label{
+/*label{
     display: inline-block;
     float: left;
     clear: left;
@@ -60,7 +57,7 @@ label{
 label input[type=password] {
   display: inline-block;
   float: left;
-}
+}*/
 .ChangeProf{
     margin-left: 95px;
 }
@@ -88,7 +85,7 @@ label input[type=password] {
 }
 
 #BottomInput{
-    margin-top: -20px;
+    //margin-top: -20px;
 }
 #shownew{
     text-align: center;
@@ -119,29 +116,6 @@ label input[type=password] {
     width: 502px;
     //background-color: green;
 }
-#contentDiv{
-    //background-color: red;
-    height: 700px;
-    width: 900px;
-    margin: auto;
-    margin-top: 10px;
-}
-
-#content, #content1{
-    //background-color: red;
-    //width:400px;
-   // margin: auto;
-}
-/*#firstmenu .content{
-    height: 50px;
-    width: 700px;
-    color: white;
-    //background-color: red;
-    //padding: 5px;
-    float: left;
-    font-size: 1em;
-    text-align: center;
-}*/
 
 #result{
     position:absolute;
@@ -251,10 +225,6 @@ label input[type=password] {
     //margin-top: -450px;
 }
 
-#ResetPass{
-    margin-top: 50px;
-}
-
 @media(max-width:767px){
    .says{
         color: yellow;
@@ -265,6 +235,9 @@ label input[type=password] {
     #ChatBig, #ChatMessages{
         width: 290px;
         height: 300px;
+    }
+    #ChatMessages{
+        border-right: thick solid #0099CC;
     }
     #ChatText{
         width: 290px;
@@ -279,7 +252,7 @@ label input[type=password] {
         height: 130px;
         border-left: thick solid #0099CC;
         border-top: thick solid #0099CC;
-        margin-left: -259px;
+        margin-left: -241px;
         margin-top: 349px;
     }
 }
