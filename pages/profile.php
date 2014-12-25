@@ -10,8 +10,8 @@
             <a href="Home.php?q=a" class="list-group-item">
                 <i class="fa fa-search"></i> Search
             </a>
-            <a href="Home.php?page=profile&a=messages" class="list-group-item">
-                <i class="fa fa-envelope"></i> Messages <span class="badge">0</span>
+            <a href="Home.php?page=private" class="list-group-item">
+                <i class="fa fa-envelope"></i> Messages <span class="badge"><?php $m = new Profile(); $m->setUserID2($_SESSION['UserID']); $m->showMessages(); ?></span>
             </a>
             <a href="#" data-toggle="collapse" data-target="#sub1" class="list-group-item"><i class="fa fa-user"></i> Settings <b class="caret"></b></a>
             <ul class="nav collapse" id="sub1">
@@ -26,8 +26,8 @@
             echo "chat";
         }elseif(isset($_GET['a']) && $_GET['a'] == "search"){
             echo "search";
-        }elseif(isset($_GET['a']) && $_GET['a'] == "messages"){
-            echo "msg";
+        /*}elseif(isset($_GET['a']) && $_GET['a'] == "messages"){
+            echo "msg";*/
         } elseif(isset($_GET['remove']) && $_GET['remove'] == 'user' && isset($_GET['user'])){
             include_once 'class.php';
             $a = new user();
@@ -43,28 +43,27 @@
         <div id='profilepic'><img alt='profile' height='150' width='150' src="<?php $pic = new user(); $pic->findID($_GET['view']); $pic->FindPic($pic->getProfile(), 1); ?>"/></div>
             <?php 
             echo "<h1 style='color:white;'>" . $_GET['view'] . "</h1>";
+            echo "<div id='sendMsg'><form action='Home.php' method='get'>";
+            echo "<input type='hidden' name='page' value='private'>";
+            echo "<input type='hidden' name='do' value='new'>";
+            echo "<input type='hidden' name='user' value='".$pic->getProfile()."'>";
+            echo "<input type='submit' value='Send message'/>";
+            echo "</form></div>";
             $p = new Profile();
             $p->showFullProfile($_GET['view']);
-            $view = new user();
-            $view->setProfile($_GET['view']);
-            $view->setUserID($_SESSION['UserID']);
-            if($view->CheckAdmin()){
-                $view->delUser();
+            $pic->setProfile($_GET['view']);
+            $pic->setUserID($_SESSION['UserID']);
+            if($pic->CheckAdmin()){
+                $pic->delUser();
             }
-                echo "<form action='Home.php' method='get'>";
-                echo "<input type='hidden' name='page' value='private'>";
-                echo "<input type='hidden' name='do' value='new'>";
-                echo "<input type='hidden' name='user' value='".$pic->getProfile()."'>";
-                echo "<input type='submit' value='Send message'/>";
-                echo "</form></div>";
-        }elseif(isset($_GET['a']) && $_GET['a'] == "files"){
-            echo "files";
+        /*}elseif(isset($_GET['a']) && $_GET['a'] == "files"){
+            echo "files";*/
         }elseif(isset($_GET['a']) && $_GET['a'] == "settings"){
             ?>
         <div class="ChangeProf">
             <?php 
-            $a = new user();
-            $a->ProfilePic($_SESSION['UserID']);
+            $pic = new user();
+            $pic->ProfilePic($_SESSION['UserID']);
             ?>
             CHANGE PROFILE PICTURE
             <form enctype="multipart/form-data" action="pages/ChangePIC.php" method="POST">

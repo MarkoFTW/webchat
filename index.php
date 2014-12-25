@@ -118,7 +118,7 @@
                     
                     //echo '<pre>' . print_r( $graphObject, 1 ) . '</pre>';
                     
-                    echo "<a href = " . $helper->getLogoutUrl( $session , 'http://devps1.marefx.com/testchat1/fb/logout.php' ) . ">Logout</a>";
+                    echo "<a href = " . $helper->getLogoutUrl( $session , 'http://devps1.marefx.com/webchat/fb/logout.php' ) . ">Logout</a>";
                     
                 }catch(FacebookRequestException $e) {
                     echo "Exception occured, code: " . $e->getCode();

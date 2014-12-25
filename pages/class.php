@@ -468,6 +468,16 @@ class Profile { //profile.php
             echo "<br/><b>Gender</b>: " . $this->overGender($p['Gender']);  
         }
     }
+    
+    public function showMessages(){
+        include 'conn.php';
+        $showM = $stmt->prepare("SELECT count(*) as stevilo FROM private_msg_groups WHERE user_one = :uid OR user_two = :uid");
+        $showM->execute(array(
+            "uid" => $this->getUserID2()
+            ));
+        $result = $showM->fetch();
+        echo $result['stevilo'];
+    }
 }
 
 
