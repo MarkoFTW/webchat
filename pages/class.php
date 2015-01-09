@@ -314,7 +314,7 @@ class user{
                 echo "<input type='hidden' name='page' value='profile'>";
                 echo "<input type='hidden' name='remove' value='user'>";
                 echo "<input type='hidden' name='user' value='".$view1['UserID']."'>";
-                echo '<input type="submit" value="Delete user" onclick="return confirm(\'Are you sure?\');" >';
+                echo '<input type="submit" class="btn btn-danger btn-xs" value="Delete user" onclick="return confirm(\'Are you sure?\');" >';
                 echo "</form></div></div>";
             }
         } else { /*echo "No user found.";*/ }

@@ -129,7 +129,7 @@ $(document).ready(function(){
         } else {
             var profile = $("#searchid1").val();
             $.post( "pages/profileResult.php", { Profile:profile }, function(result){
-                window.location.replace("http://devps1.marefx.com/testchat1-bootstrap/Home.php?page=private&do=new&user=" + result);
+                window.location.replace("http://devps1.marefx.com/webchat/Home.php?page=private&do=new&user=" + result);
             });
         }
     });
@@ -148,7 +148,7 @@ $(document).ready(function(){
             } else {
                 var profile = $("#searchid1").val();
                 $.post( "pages/profileResult.php", { Profile:profile }, function(result){
-                    window.location.replace("http://devps1.marefx.com/testchat1-bootstrap/Home.php?page=private&do=new&user=" + result);
+                    window.location.replace("http://devps1.marefx.com/webchat/Home.php?page=private&do=new&user=" + result);
                 });
             }
         }

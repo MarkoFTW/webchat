@@ -31,32 +31,37 @@ if(isset($_GET['do']) && $_GET['do'] == "show" && isset($_GET['hash'])){
 </form>
 <?php
 } elseif(isset($_GET['do']) && $_GET['do'] == "new" && isset($_GET['user'])){
-    echo "<div id='shownew'><a href='Home.php?page=private&do=show' class='pmsg'>Show conversations</a> | ";
-    echo "<a href='Home.php?page=private&do=new' class='pmsg'>New conversation</a><br/>";
-    echo "Sending message to user ". $_GET['user'] .".</div>";
-        $convo = new msgs();
-        $convo->setUserID($_SESSION['UserID']);
-        $convo->setRecptID($_GET['user']);
-        $convo->CheckValidConvo("no");
-    ?>
-<form method="POST">
-    <?php
-    if(isset($_POST['message']) && !empty($_POST['message'])){
-        $convo = new msgs();
-        $convo->setUserID($_SESSION['UserID']);
-        $convo->setRecptID($_GET['user']);
-        $convo->setMessage($_POST['message']);
-        $convo->CheckValidConvo("yes");
-        $convo->InsertConvoMsg();
+    if(empty(trim(htmlspecialchars($_GET['user'])))){
+        echo 'Error: username not found.';
+        header("Location: Home.php?page=private&do=new");
     } else {
-        //echo "Empty message.";
+        echo "<div id='shownew'><a href='Home.php?page=private&do=show' class='pmsg'>Show conversations</a> | ";
+        echo "<a href='Home.php?page=private&do=new' class='pmsg'>New conversation</a><br/>";
+        echo "Sending message to user ". $_GET['user'] .".</div>";
+            $convo = new msgs();
+            $convo->setUserID($_SESSION['UserID']);
+            $convo->setRecptID($_GET['user']);
+            $convo->CheckValidConvo("no");
+        ?>
+    <form method="POST">
+        <?php
+        if(isset($_POST['message']) && !empty($_POST['message'])){
+            $convo = new msgs();
+            $convo->setUserID($_SESSION['UserID']);
+            $convo->setRecptID($_GET['user']);
+            $convo->setMessage($_POST['message']);
+            $convo->CheckValidConvo("yes");
+            $convo->InsertConvoMsg();
+        } else {
+            //echo "Empty message.";
+        }
+        ?>
+        <textarea name="message" rows="7" cols="60" class="privText" id="sendPrivate1"></textarea>
+        <input type="submit" value="Send message" class="inputSend" id="inputSend1"/>
+    </form>
+
+    <?php    
     }
-    ?>
-    <textarea name="message" rows="7" cols="60" class="privText" id="sendPrivate1"></textarea>
-    <input type="submit" value="Send message" class="inputSend" id="inputSend1"/>
-</form>
-    
-<?php    
 } elseif(isset($_GET['do']) && $_GET['do'] == "new"){
     echo "<div id='shownew'><a href='Home.php?page=private&do=show' class='pmsg'>Show conversations</a> | ";
     echo "<a href='Home.php?page=private&do=new' class='pmsg'>New conversation</a></div>";

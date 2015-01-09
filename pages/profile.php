@@ -47,7 +47,7 @@
             echo "<input type='hidden' name='page' value='private'>";
             echo "<input type='hidden' name='do' value='new'>";
             echo "<input type='hidden' name='user' value='".$pic->getProfile()."'>";
-            echo "<input type='submit' value='Send message'/>";
+            echo "<input type='submit' class='btn btn-info btn-xs' value='Send message'/>";
             echo "</form></div>";
             $p = new Profile();
             $p->showFullProfile($_GET['view']);
