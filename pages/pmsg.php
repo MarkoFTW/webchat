@@ -31,7 +31,7 @@ if(isset($_GET['do']) && $_GET['do'] == "show" && isset($_GET['hash'])){
 </form>
 <?php
 } elseif(isset($_GET['do']) && $_GET['do'] == "new" && isset($_GET['user'])){
-    if(empty(trim(htmlspecialchars($_GET['user'])))){
+    if(empty(htmlspecialchars($_GET['user']))){
         echo 'Error: username not found.';
         header("Location: Home.php?page=private&do=new");
     } else {

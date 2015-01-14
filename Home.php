@@ -22,7 +22,7 @@
         </script>
         <?php
         if($_GET['page'] == "country" || $_GET['page'] == "social"){
-            echo '<script src="http://code.highcharts.com/highcharts.js"></script';
+            echo '<script src="http://code.highcharts.com/highcharts.js"></script>';
             echo '<script src="http://code.highcharts.com/modules/exporting.js"></script>';
             echo '<script src="js/charts.js" type="text/javascript"></script>';
         }

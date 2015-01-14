@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+    $("#ChatText, #sendPrivate, #sendPrivate1").focus();
+
     $.urlParam = function(name){
         var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
         if (results===null){
@@ -174,7 +176,7 @@ $(document).ready(function(){
                     $("#ChatMessages").load("pages/DisplayMessages.php");
                     $("#ChatText").val("");
                     $("#ChatMessages").animate({ scrollTop: "+=500" }, "slow");
-                    $('#ChatText').removeAttr("disabled", "disabled");
+                    $('#ChatText').removeAttr("disabled", "disabled").focus();
                 });
             }
         }
@@ -236,10 +238,6 @@ $(document).ready(function(){
     setInterval(function(){
         $("#ChatMessages").load("pages/DisplayMessages.php");
     },1500);
-
-    /*setInterval(function(){
-        $("#ListOnlineUsers").load("pages/DisplayUsers.php");
-    },5000);*/
 
     $("#ChatMessages").load("pages/DisplayMessages.php");
     $("#ListOnlineUsers").load("pages/DisplayUsers.php");

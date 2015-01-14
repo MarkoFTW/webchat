@@ -1,22 +1,30 @@
 <?php
 include '../conn.php';
 
-$result = $stmt->prepare("SELECT Type, count(Type) FROM users GROUP BY Type");
-$result->execute();
+$Qresult = $stmt->prepare("SELECT Type, count(Type) FROM users GROUP BY Type");
+$Qresult->execute();
+
+
+$category = array();
+$category['name'] = 'LoginType';
+
+$series1 = array();
+$series1['name'] = 'Users';
 
 $rows = array();
-while ($r = $result->fetch()){
+while ($r = $Qresult->fetch()){
     if($r['Type'] == 1){
-        $row[0] = "Website";
-        $row[1] = $r[1];
+        $category['data'][] = "Website";
+        $series1['data'][] = $r[1];
     } else {
-        $row[0] = "Facebook";
-        $row[1] = $r[1];
+        $category['data'][] = "Facebook";
+        $series1['data'][] = $r[1];
     }
-    /*$row[0] = $r[0];
-    $row[1] = $r[1];*/
-    array_push($rows,$row);
 }
 
-print json_encode($rows, JSON_NUMERIC_CHECK);
+$result = array();
+array_push($result,$category);
+array_push($result,$series1);
+
+print json_encode($result, JSON_NUMERIC_CHECK);
 ?>

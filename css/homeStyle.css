@@ -187,7 +187,7 @@ label input[type=password] {
     font-family: 'IM Fell DW Pica', serif;
 }
 .says{
-    color: whitesmoke;
+    color: #B0B0B0;//whitesmoke;
 }
 
 #ChatBig{
@@ -227,7 +227,7 @@ label input[type=password] {
 
 @media(max-width:767px){
    .says{
-        color: yellow;
+        //color: yellow;
     }
     #ChatBig{
         margin-left: -6px;
@@ -258,7 +258,7 @@ label input[type=password] {
 }
 @media(min-width:768px) and (max-width:991px){
     .says{
-        color: blue;
+        //color: blue;
     }
     #ChatBig, #ChatMessages{
         width: 337px;       
@@ -273,7 +273,7 @@ label input[type=password] {
 }
 @media(min-width:992px) and (max-width:1200px){
     .says{
-        color: red;
+        //color: red;
     }
     #ChatBig, #ChatMessages, #ChatText{
         width: 520px;
@@ -281,6 +281,6 @@ label input[type=password] {
 }
 @media(min-width:1200px){
     .says{
-        color: purple;
+        //color: purple;
     }
 }
