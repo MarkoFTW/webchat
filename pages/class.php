@@ -1,4 +1,5 @@
 <?php
+session_start();
 function BBCodes($text) { //Home.php->class-chat, pmsg.php->class
     $bb_codes = array(
         "/\[u\](.*?)\[\/u\]/is" => "<u>$1</u>",
@@ -25,12 +26,21 @@ function smileys($msg){//Home.php->class-chat, pmsg.php->class
 
 function censorReplace($text) {//Home.php->class-chat, pmsg.php->class
     include 'conn.php';
-    $censorQuery = $stmt->prepare("SELECT * FROM censor");
-    $censorQuery->execute();
-    while ($censor = $censorQuery->fetch()) {
-        $text = str_replace($censor['Word'],$censor['Replacement'],$text);
+    $censor = $stmt->prepare("SELECT Censor FROM users WHERE UserID = :id");
+    $censor->execute(array(
+        "id" => $_SESSION['UserID']
+    ));
+    $res = $censor->fetch();
+    if($res["Censor"] == "1") {
+        $censorQuery = $stmt->prepare("SELECT * FROM censor");
+        $censorQuery->execute();
+        while ($censor = $censorQuery->fetch()) {
+            $text = str_replace($censor['Word'],$censor['Replacement'],$text);
+        }
+        return $text;
+    } else {
+        return $text;
     }
-    return $text;
 }
 
 function checkFBexist($id) { //index.php
@@ -134,7 +144,7 @@ class user{
             try {
                 $this->FindCountry($this->getIP());
                 include "conn.php";
-                $req = $stmt->prepare("INSERT INTO users(Username,Email,Password,Access,IP_ADDR,Country,Type,Created,Birthday,Last_seen,Gender) VALUES (:Username,:Email,:Password,:Access,:ip,:country,:type,NOW(),NOW(),NOW(),:g)");
+                $req = $stmt->prepare("INSERT INTO users(Username,Email,Password,Access,IP_ADDR,Country,Type,Created,Birthday,Last_seen,Gender,Censor) VALUES (:Username,:Email,:Password,:Access,:ip,:country,:type,NOW(),NOW(),NOW(),:g,:c)");
                 $req->execute(array(
                     'Username' => $this->getUsername(),
                     'Email' => $this->getEmail(),
@@ -143,7 +153,8 @@ class user{
                     'ip' => $this->getIP(),
                     'country' => $this->getCountry(),
                     'type' => "1",
-                    'g' => "0"
+                    'g' => "0",
+                    'c' => "1"
                     ));
  
                 header("Location: ../index.php?success=1");
@@ -157,14 +168,16 @@ class user{
         try {
             $this->FindCountry($this->getIP());
             include "conn.php";
-            $req = $stmt->prepare("INSERT INTO users(Username,Email,Access,IP_ADDR,Country,Type,Created) VALUES (:Username,:Email,:Access,:ip,:country,:type,NOW())");
+            $req = $stmt->prepare("INSERT INTO users(Username,Email,Access,IP_ADDR,Country,Type,Created,Birthday,Last_seen,Gender,Censor) VALUES (:Username,:Email,:Access,:ip,:country,:type,NOW(),NOW(),NOW(),:g,:c)");
             $req->execute(array(
                 'Username' => $this->getUsername(),
                 'Email' => $this->getEmail(),
                 'Access' => "1",
                 'ip' => $this->getIP(),
                 'country' => $this->getCountry(),
-                'type' => "2"
+                'type' => "2",
+                'g' => "0",
+                'c' => "1"
                 ));
         }  catch (PDOException $e) {
             echo $e->getMessage();
@@ -268,6 +281,40 @@ class user{
         } else {
             return false;
         }
+    }
+    
+    public function addCensor($a, $b) {
+        include "conn.php";
+        $d = $stmt->prepare("INSERT INTO censor(Word,Replacement) VALUES(:a,:b)");
+        $d->execute(array(
+            "a" => $a,
+            "b" => $b
+        ));
+    }
+    
+    public function remCensor($num) {
+        include "conn.php";
+        $d = $stmt->prepare("DELETE FROM censor WHERE CensorID = :id");
+        $d->execute(array(
+            "id" => $num
+        ));
+        
+        echo "Censor with ID ".$num." has been removed";
+    }
+    
+    public static function listCensor(){
+        include "conn.php";
+        $list = $stmt->prepare("SELECT * FROM censor");
+        $list->execute();
+        echo "<h4 style='color:white;'><b>Censor list:</b></h4>";
+        echo"<table id='myTable' class='tablesorter' border='2'>";
+        echo"<thead><th style='width:25px;'>ID</th><th style='width:250px;'>Word</th><th style='width:250px;'>Censored</th><th>Remove</th></thead>";
+        echo "<tbody>";
+        while($l = $list->fetch()){
+            echo "</tr><td>". $l['CensorID'] ."</td><td>". $l['Word'] ."</td><td>". $l['Replacement'] ."</td><td><a class='btn btn-danger btn-xs' href='Home.php?page=admincp&d=".$l['CensorID']."'>Remove</a></td></tr>";
+        }
+        echo"</tbody>";
+        echo"</table>"; 
     }
 
     public function FindEmail(){ //InsertUser.php
@@ -477,6 +524,15 @@ class Profile { //profile.php
             ));
         $result = $showM->fetch();
         echo $result['stevilo'];
+    }
+    
+    public function changeCensor($status){
+        include 'conn.php';
+        $c = $stmt->prepare("UPDATE users SET Censor = :status WHERE UserID = :id");
+        $c->execute(array(
+            'id' => $this->getUserID2(),
+            'status' => $status
+        ));
     }
 }
 

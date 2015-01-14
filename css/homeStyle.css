@@ -171,8 +171,11 @@ label input[type=password] {
     border-left: thick solid #0099CC;
     //border: 1px solid PaleTurquoise;
 }
-#ChatText:focus{
-    outline: none;
+#ChatText:focus, .privText:focus {
+    //outline: 0px none;
+    -webkit-box-shadow: 0px -10px 35px -4px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px -10px 35px -4px rgba(0,0,0,0.75);
+    box-shadow: 0px -10px 35px -4px rgba(0,0,0,0.75);
 }
 #ChatMessages{
     width: 688px;
@@ -189,7 +192,11 @@ label input[type=password] {
 .says{
     color: #B0B0B0;//whitesmoke;
 }
-
+#adminCP{
+    width: 50%;
+    margin: 0 auto;
+    margin-top: 25px;
+}
 #ChatBig{
     width: 700px;
     height: 600px;

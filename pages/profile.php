@@ -65,15 +65,23 @@
             $pic = new user();
             $pic->ProfilePic($_SESSION['UserID']);
             ?>
-            CHANGE PROFILE PICTURE
+            <h4 style="color:white;"><b>Change profile picture:</b></h4>
             <form enctype="multipart/form-data" action="pages/ChangePIC.php" method="POST">
                 Select picture: <input name="file" type="file" accept="image/*"/>
                 <input type='hidden' name='UserID' value='<?php echo $_SESSION['UserID']; ?>'>
-                <input type="submit" class="btn btn-primary btn-load btn-sm" data-loading-text="Changing picture..." value="Change"/>
+                <input type="submit" class="btn btn-primary btn-load btn-sm" data-loading-text="Changing picture..." value="Change picture"/>
             </form>
             Maximum size: 5mb <br/>
-            Allowed extensions: .png, .jpg, .jpeg, .gif
+            Allowed extensions: .png, .jpg, .jpeg, .gif<br/><br/><br/>
+            
+            <h4 style="color:white;"><b>Turn censor on or off:</b></h4>
+            <form method="post" action="pages/settings.php">
+                <input type="radio" name="censor" value="on" checked>On
+                <input type="radio" name="censor" value="off">Off<br/>
+                <input type="submit" class="btn btn-primary btn-load btn-sm" data-loading-text="Changing censor..." value="Change censor">
+            </form>
         </div>
+        
         <?php
         }elseif(isset($_GET['a']) && $_GET['a'] == "email"){
          ?>
