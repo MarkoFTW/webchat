@@ -5,6 +5,14 @@ if(isset($_GET['do']) && $_GET['do'] == "show" && isset($_GET['hash'])){
     if($hashloc->findHash($_GET['hash'])){
         echo "<div id='shownew'><a href='Home.php?page=private&do=show' class='pmsg'>Show conversations</a> | ";
         echo "<a href='Home.php?page=private&do=new' class='pmsg'>New conversation</a></div>";
+        ?>
+        <div id="dlCONVO">
+            <form method="post" action="pages/convoDL.php">
+                <input type="hidden" name="hash" value="<?php echo $_GET['hash']; ?>">
+                <input type="submit" class="btn btn-primary btn-load btn-sm" data-loading-text="Downloading..." value="Download conversation">
+            </form>
+        </div>
+        <?php
         echo "<div id='privMsg'>";
         $showConvos = new msgs();
         $showConvos->setHash($_GET['hash']);
@@ -89,6 +97,14 @@ if(isset($_GET['do']) && $_GET['do'] == "show" && isset($_GET['hash'])){
     $showConvoNames = new msgs();
     $showConvoNames->setUserID($_SESSION['UserID']);
     $showConvoNames->ShowAllConvos();
+    
+    if(isset($_GET['success']) && $_GET['success'] == 1){
+        echo '<p><span style="color:green">Chat history has been generated, downloading...</span></p>';  
+    } elseif(isset($_GET['error']) && $_GET['error'] == 1){
+        echo '<p><span style="color:red">Error</span></p>';
+    }
+    
     echo "</div>";
+      
 }
 ?>

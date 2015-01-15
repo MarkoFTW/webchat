@@ -41,6 +41,9 @@ a.onList:hover{
     color: white;
 }
 
+#dlCONVO{
+    float: right;
+}
 
 
 #sidebar1, #profilepic{
@@ -97,7 +100,7 @@ label input[type=password] {
     //background-color: red;
     //border-bottom: 1px solid #333;
     overflow-y: auto;
-    margin: auto;
+    margin: 0 auto;
 }
 .privText{
     width: 496px;
@@ -108,11 +111,13 @@ label input[type=password] {
     resize: none;
     border: 1px solid PaleTurquoise;
     display: block;
-    margin: auto;
+    //margin: 0 auto;
+    margin-left: 260px;
 }
 .inputSend{
     display: block;
-    margin: auto;
+    //margin: auto;
+    margin-left: 260px;
     width: 496px;
     //background-color: green;
 }

@@ -65,7 +65,17 @@ function last_active($i){ //class
         'id' => $i
     ));
 }
-        
+function replaceID($id){
+    include 'conn.php';
+    $repl_id = $stmt->prepare("SELECT * FROM users WHERE UserID = :id");
+    $repl_id->execute(array(
+        'id' => $id,
+    ));
+    $result = $repl_id->fetch();
+    
+    return $result['Username'];
+}
+
 class user{
     private $UserID,$Username,$Email,$Password,$Password1,$OldPassword,$Profile,$IP,$Country,$Type;
     

@@ -85,7 +85,7 @@
                         
                         <?php
                             if(isset($_SESSION['Username'])) {
-                                echo '<li><a href="#" id="UserProfile">Logged in as '. $_SESSION['Username'] .'</a></li>';
+                                echo '<li><a href="#" id="UserProfile">Logged in as '. htmlspecialchars($_SESSION['Username']) .'</a></li>';
                                 if(isset($_SESSION) && $_SESSION['Type'] == 2) {
                                     echo '<li><a href="#Logout" id="LogoutUser">Logout</a></li>';
                                 } else {
