@@ -139,59 +139,6 @@
                 
             </div>
 
-            <?php
-                if(isset($_GET['success']) && $_GET['success'] == 1){
-            ?>
-            <p>
-                <span style="color:green">Password sucessfully changed</span>
-            </p>                 
-            <?php
-                } elseif(isset($_GET['error']) && $_GET['error'] == 1){
-            ?>
-            <p>
-                <span style="color:red">Wrong password</span>
-            </p>                 
-            <?php
-                } elseif(isset($_GET['success']) && $_GET['success'] == 2){
-            ?>
-            <p>
-                <span style="color:green">Email sucessfully changed</span>
-            </p>        
-             <?php
-                } elseif(isset($_GET['error']) && $_GET['error'] == 2){
-            ?>
-            <p>
-                <span style="color:red">Wrong password</span>
-            </p>             
-            <?php
-                } elseif(isset($_GET['success']) && $_GET['success'] == 3){
-            ?>
-            <p>
-                <span style="color:green">Display picture successfully changed</span>
-            </p>             
-            <?php
-                } elseif(isset($_GET['error']) && $_GET['error'] == 3){
-            ?>
-            <p>
-                <span style="color:red">Wrong password</span>
-            </p> 
-            <?php
-                } elseif(isset($_GET['error']) && $_GET['error'] == 4){
-            ?>
-            <p>
-                <span style="color:red">Empty fields</span>
-            </p>            
-            <?php
-                } elseif(isset($_GET['error']) && $_GET['error'] == 5){
-            ?>
-            <p>
-                <span style="color:red">Password or Email is not matching</span>
-            </p>            
-            <?php
-                } 
-            ?>
-   
-            
         </div>
         
         <?php

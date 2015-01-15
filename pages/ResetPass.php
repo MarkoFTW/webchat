@@ -8,17 +8,17 @@ if(isset($_POST['passwordCurr']) && isset($_POST['password1']) && isset($_POST['
         if(trim($_POST['password1']) == trim($_POST['password2'])){
             $user = new user();
             $user->setUserID($_SESSION['UserID']);
-            $user->setOldPassword(sha1($_POST['passwordCurr']));
-            $user->setPassword(sha1($_POST['password1']));
-            $user->setPassword1(sha1($_POST['password2']));
+            $user->setOldPassword(sha1(trim($_POST['passwordCurr'])));
+            $user->setPassword(sha1(trim($_POST['password1'])));
+            $user->setPassword1(sha1(trim($_POST['password2'])));
             $user->ChangePass();
         } else {
             echo "New passwords do not match!";
-            header("Location: ../index.php?p=profile&a=settings&error=5");
+            header("Location: ../Home.php?page=profile&a=email&error=5");
         }
     } else {
         echo "Empty fields!";
-        header("Location: ../index.php?p=profile&a=settings&error=4");
+        header("Location: ../Home.php?page=profile&a=email&error=6");
     }
 } else {
     echo "Error.";

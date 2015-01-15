@@ -8,10 +8,10 @@
         if (trim($_POST['Username']) != "" || trim($_POST['Email']) != "" || trim($_POST['Password']) != "" || trim($_POST['Password1']) != ""){
             if(filter_var($_POST['Email'], FILTER_VALIDATE_EMAIL)){
                 $user = new user();
-                $user->setUsername($_POST['Username']);
-                $user->setEmail($_POST['Email']);
-                $user->setPassword(sha1($_POST['Password']));
-                $user->setPassword1(sha1($_POST['Password1']));
+                $user->setUsername(trim($_POST['Username']));
+                $user->setEmail(trim($_POST['Email']));
+                $user->setPassword(sha1(trim($_POST['Password'])));
+                $user->setPassword1(sha1(trim($_POST['Password1'])));
                 $user->setIP($_SERVER['REMOTE_ADDR']);
                 if(!$user->FindEmail()){
                     echo "Email in use!";

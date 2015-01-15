@@ -248,9 +248,9 @@ class user{
                 'UserID' => $this->getUserID(),
                 'NewPassword' => $this->getPassword()
             ));
-            header("Location: ../Home.php?success=1");
+            header("Location: ../Home.php?page=profile&a=email&success=2");
         } else {
-            header("Location: ../Home.php?error=1");
+            header("Location: ../Home.php?page=profile&a=email&error=4");
         }
     }
     
@@ -265,9 +265,10 @@ class user{
                 'UserID' => $this->getUserID(),
                 'NewEmail' => $this->getPassword()
             ));
-            header("Location: ../Home.php?p=profile&a=settings&success=2");
+            $_SESSION['Email'] = $_POST['email1'];
+            header("Location: ../Home.php?page=profile&a=email&success=1");
         } else {
-            header("Location: ../Home.php?p=profile&a=settings&error=1");
+            header("Location: ../Home.php?page=profile&a=email&error=3");
         }
     }
     
@@ -533,6 +534,18 @@ class Profile { //profile.php
             'id' => $this->getUserID2(),
             'status' => $status
         ));
+        header("Location: ../Home.php?page=profile&a=settings");
+    }
+    
+    public static function censorOpt($id){
+        include 'conn.php';
+        $c = $stmt->prepare("SELECT Censor FROM users WHERE UserID = :id");
+        $c->execute(array(
+            'id' => $id,
+        ));
+        while($r = $c->fetch()){
+            return $r['Censor'];
+        }
     }
 }
 
@@ -797,7 +810,7 @@ class chat{ //Home.php
             $datum = str_replace('-', '.', $novidatumura[0]);
             $ura = date('H:i',strtotime($novidatumura[1]));
             ?>
-            <span class="Time"><?php echo $ura . " "; ?></span><span class="UserNameS"><?php echo $DataUser['Username']; ?></span><span class="says"> says:</span><br/>
+            <span class="Time"><?php echo $ura . " "; ?></span><span class="UserNameS"><?php echo trim(htmlspecialchars($DataUser['Username'])); ?></span><span class="says"> says:</span><br/>
             <span class="ChatMessagesS"><?php echo censorReplace(BBCodes(smileys(htmlspecialchars($ChatData['Message'])))); ?></span><br/>
             <?php
         }
@@ -812,7 +825,7 @@ class chat{ //Home.php
             $DisplayUsers->execute(array('UserID' => $OnlineData['OnlineID']));
             $DataUsers = $DisplayUsers->fetch();
             ?>
-            <a class="onList" href="Home.php?page=profile&view=<?php echo $DataUsers['Username']; ?>"><?php echo $DataUsers['Username']; ?></a><br/>    
+            <a class="onList" href="Home.php?page=profile&view=<?php echo trim(htmlspecialchars($DataUsers['Username'])); ?>"><?php echo trim(htmlspecialchars($DataUsers['Username'])); ?></a><br/>    
             <?php
         }
     }

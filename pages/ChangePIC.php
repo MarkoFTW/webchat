@@ -44,16 +44,17 @@ if ((in_array($_FILES['file']['type'], $mime))
       echo $_FILES["file"]["name"] . " already exists. ";
       move_uploaded_file($_FILES["file"]["tmp_name"], "../img/users/".$_POST['UserID']."/profile.".$extension);
       chmod("../img/users/".$_POST['UserID']."/profile.".$extension, 0777);
-      header("Location: ../Home.php?page=profile&success=1");
+      header("Location: ../Home.php?page=profile&a=settings&success=1");
     } else {
       move_uploaded_file($_FILES["file"]["tmp_name"], "../img/users/".$_POST['UserID']."/profile.".$extension);
       chmod("../img/users/".$_POST['UserID']."/profile.".$extension, 0777);
       echo "Stored in: " . "img/users/".$_POST['UserID']."/" . $_FILES["file"]["name"];
-      header("Location: ../Home.php?page=profile&success=1");
+      header("Location: ../Home.php?page=profile&a=settings&success=1");
     }
   }
 } else {
-  echo "Invalid file";
+    header("Location: ../Home.php?page=profile&a=settings&error=1");
+    echo "Invalid file";
 }
 
 ?>

@@ -11,5 +11,5 @@ if(isset($_POST['censor'])){
         $c->changeCensor("1");
     }
 } else {
-    echo "na";
+    echo "Error";
 }
