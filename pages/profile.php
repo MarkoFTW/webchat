@@ -60,12 +60,12 @@
             echo "files";*/
         }elseif(isset($_GET['a']) && $_GET['a'] == "settings"){
             ?>
-        <div class="ChangeProf">
+        <div id="ChangeProf">
             <?php 
             $pic = new user();
             $pic->ProfilePic($_SESSION['UserID']);
             ?>
-            <h4 style="color:white;"><b>Change profile picture:</b></h4>
+            <br/><h4 style="color:white;"><b>Change profile picture:</b></h4>
             <form enctype="multipart/form-data" action="pages/ChangePIC.php" method="POST">
                 Select picture: <input name="file" type="file" accept="image/*"/>
                 <input type='hidden' name='UserID' value='<?php echo $_SESSION['UserID']; ?>'>
