@@ -151,67 +151,23 @@
                 </p>
                 <?php
                     if(isset($_GET['error']) && $_GET['error'] == 1){
-                ?>
-                <p>
-                    <span style="color:red">Error login</span>
-                </p>                 
-                <?php
-                    }
-                    if(isset($_GET['error']) && $_GET['error'] == 2){
-                ?>
-                <p>
-                    <span style="color:red">Error creating account, passwords do not match</span>
-                </p>                 
-                <?php
-                    }
-                    if(isset($_GET['error']) && $_GET['error'] == 3){
-                ?>
-                <p>
-                    <span style="color:red">No matching accounts found</span>
-                </p>                 
-                <?php
-                    }
-                    if(isset($_GET['error']) && $_GET['error'] == 4){
-                ?>
-                <p>
-                    <span style="color:red">Empty fields</span>
-                </p>                 
-                <?php
-                    }
-                    if(isset($_GET['error']) && $_GET['error'] == 5){
-                ?>
-                <p>
-                    <span style="color:red">Email already in use!</span>
-                </p>                 
-                <?php
-                    }
-                    if(isset($_GET['error']) && $_GET['error'] == 6){
-                ?>
-                <p>
-                    <span style="color:red">Username already in use!</span>
-                </p>   
-                <?php
-                    }
-                    if(isset($_GET['error']) && $_GET['error'] == 7){
-                ?>
-                <p>
-                    <span style="color:red">Invalid email</span>
-                </p> 
-                <?php
-                    }
-                    if(isset($_GET['success']) && $_GET['success'] == 1){
-                ?>
-                <p>
-                  <span style="color:green">Registration successfull</span>
-                </p>
-                <?php
-                    }
-                    if(isset($_GET['success']) && $_GET['success'] == 2){
-                ?>
-                <p>
-                  <span style="color:green">Password reset successfull, please check your Inbox and Junk folder</span>
-                </p>
-                <?php
+                        echo '<p><span style="color:red">Error login</span></p>';
+                    }elseif(isset($_GET['error']) && $_GET['error'] == 2){
+                        echo '<p><span style="color:red">Error creating account, passwords do not match</span><p>';
+                    }elseif(isset($_GET['error']) && $_GET['error'] == 3){
+                        echo '<p><span style="color:red">No matching accounts found</span></p>';
+                    }elseif(isset($_GET['error']) && $_GET['error'] == 4){
+                        echo '<p><span style="color:red">Empty fields</span></p>';
+                    }elseif(isset($_GET['error']) && $_GET['error'] == 5){
+                        echo '<p><span style="color:red">Email already in use!</span></p>';
+                    }elseif(isset($_GET['error']) && $_GET['error'] == 6){
+                        echo '<p><span style="color:red">Username already in use!</span></p>';
+                    }elseif(isset($_GET['error']) && $_GET['error'] == 7){
+                        echo '<p><span style="color:red">Invalid email</span></p>';
+                    }elseif(isset($_GET['success']) && $_GET['success'] == 1){
+                        echo '<p><span style="color:green">Registration successfull</span></p>';
+                    }elseif(isset($_GET['success']) && $_GET['success'] == 2){
+                        echo '<p><span style="color:green">Password reset successfull, please check your Inbox and Junk folder</span></p>';
                     }
                 ?>
             </form>

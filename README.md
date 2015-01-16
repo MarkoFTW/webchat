@@ -8,12 +8,16 @@ http://devps1.marefx.com/webchat
 
 #Features
 
-- Online list
+- Group chat
+- Registration, login
 - Private messaging
-- Smileys, word censoring, BBcodes
-- Profiles
+- Online list
 - Facebook API
+- Profiles
+- Private chat log download
 - Search users
 - AdminCP
+- Delete users
 - Statistics
-- Forgotten password, change password, change email
+- Custom profile settings
+- Smileys, word censoring, BBcodes

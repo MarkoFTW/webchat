@@ -17,12 +17,8 @@
                 'pw' => sha1($newPass),
                 'mail' => $_POST['myEmail']
             ));
-            $resetpass = new mail();
-            $resetpass->setEmail($_POST['myEmail']);
-            $resetpass->setHeaders("From: noreply@domena.com");
-            $resetpass->setSubject("Password reset");
-            $resetpass->setMessage("Your new password is: " . $newPass);
-            $resetpass->sendEmail();
+            $resetpass = new mailer();
+            $resetpass->sendEmail($_POST['myEmail'], "Password reset", "Your new password is: " . $newPass, "From: noreply@domain.com");
         } else {
             echo "No email found.";
             header("Location: ../index.php?error=3");
@@ -42,12 +38,8 @@
                 'pw' => sha1($newPass),
                 'user' => $_POST['myUser']
             ));
-            $resetpass = new mail();
-            $resetpass->setEmail($getmail['Email']);
-            $resetpass->setHeaders("From: noreply@domena.com");
-            $resetpass->setSubject("Password reset");
-            $resetpass->setMessage("Your new password is: " . $newPass);
-            $resetpass->sendEmail();
+            $resetpass = new mailer();
+            $resetpass->sendEmail($getmail['Email'], "Password reset", "Your new password is: " . $newPass, "From: noreply@domain.com");
         } else {
             echo "No user found.";
             header("Location: ../index.php?error=3");

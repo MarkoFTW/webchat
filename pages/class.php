@@ -10,8 +10,8 @@ function BBCodes($text) { //Home.php->class-chat, pmsg.php->class
         "/\[img](.*?)\[\/img\]/is" => "<img src='$1' height='100' width='100' draggable='false'/>"
         //ahref
     );
-    $text = preg_replace(array_keys($bb_codes), array_values($bb_codes), $text);
-    return $text;
+    $textR = preg_replace(array_keys($bb_codes), array_values($bb_codes), $text);
+    return $textR;
 }
 
 function smileys($msg){//Home.php->class-chat, pmsg.php->class
@@ -560,54 +560,9 @@ class Profile { //profile.php
 }
 
 
-class mail{ //index.php -> ForgotPassword
-    private $Email,$Message,$Subject,$Headers,$UserID,$Username;
-    
-    public function getEmail(){
-        return $this->Email;
-    }
-    public function setEmail($Email){
-        $this->Email = $Email;
-    }
-    
-    public function getMessage(){
-        return $this->Message;
-    }
-    public function setMessage($Message){
-        $this->Message = $Message;
-    }   
-        
-    public function getSubject(){
-        return $this->Subject;
-    }
-    public function setSubject($Subject){
-        $this->Subject = $Subject;
-    }
-    
-    public function getHeaders(){
-        return $this->Headers;
-    }
-    public function setHeaders($Headers){
-        $this->Headers = $Headers;
-    }
-    
-    public function getUserID(){
-        return $this->UserID;
-    }
-    public function setUserID($UserID){
-        $this->UserID = $UserID;
-    }
-    
-    public function getUsername(){
-        return $this->Username;
-    }
-    public function setUsername($Username){
-        $this->Username = $Username;
-    }
-    
-    public function sendEmail(){
-        mail($this->getEmail(), $this->getSubject(), $this->getMessage(), $this->getHeaders());
-        echo "Sending mail to ". $this->getEmail() ." with subject ". $this->getSubject() .", message ". $this->getMessage() .", headers: ". $this->getHeaders() . ".";
+class mailer{ //index.php -> ForgotPassword
+    public function sendEmail($mail, $subject, $message, $headers){
+        mail($mail, $subject, $message, $headers);
         header("Location: ../index.php?success=2");
     }
 }
