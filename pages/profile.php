@@ -67,9 +67,9 @@
             ?>
             <br/><h4 style="color:white;"><b>Change profile picture:</b></h4>
             <form enctype="multipart/form-data" action="pages/ChangePIC.php" method="POST">
-                Select picture: <input name="file" type="file" accept="image/*"/>
+                Select picture: <input name="file" type="file" accept="image/*" required/>
                 <input type='hidden' name='UserID' value='<?php echo $_SESSION['UserID']; ?>'>
-                <input type="submit" class="btn btn-primary btn-load btn-sm" data-loading-text="Changing picture..." value="Change picture"/>
+                <input type="submit" class="btn btn-primary btn-load btn-sm" data-loading-text="Changing picture..." value="Submit picture"/>
             </form>
             Maximum size: 5mb <br/>
             Allowed extensions: .png, .jpg, .jpeg, .gif<br/><br/>
@@ -81,13 +81,31 @@
                 }
             ?>
               
-            <br/><br/>
+            <br/>
             
             <h4 style="color:white;"><b>Turn censor on or off:</b></h4>
             <form method="post" action="pages/settings.php">
-                <input type="radio" name="censor" value="on" <?php if(Profile::censorOpt($_SESSION['UserID']) == "1") { echo " checked"; } ?>>On
-                <input type="radio" name="censor" value="off" <?php if(Profile::censorOpt($_SESSION['UserID']) == "0") { echo " checked"; }?>> Off<br/>
-                <input type="submit" class="btn btn-primary btn-load btn-sm" data-loading-text="Changing censor..." value="Change censor">
+                <input type="radio" name="censor" value="on" <?php if(Profile::settingsOpt($_SESSION['UserID'], 1) == "1") { echo " checked"; } ?>>On
+                <input type="radio" name="censor" value="off" <?php if(Profile::settingsOpt($_SESSION['UserID'], 1) == "0") { echo " checked"; } ?>> Off<br/>
+                <input type="submit" class="btn btn-primary btn-load btn-sm" data-loading-text="Changing censor..." value="Submit">
+            </form>
+            
+            <br/>
+            
+            <h4 style="color:white;"><b>Change gender:</b></h4>
+            <form method="post" action="pages/settings.php">
+                <input type="radio" name="gender" value="male" <?php if(Profile::settingsOpt($_SESSION['UserID'], 2) == "1") { echo " checked"; } ?>>Male
+                <input type="radio" name="gender" value="alien" <?php if(Profile::settingsOpt($_SESSION['UserID'], 2) == "0") { echo " checked"; } ?>> Alien
+                <input type="radio" name="gender" value="female" <?php if(Profile::settingsOpt($_SESSION['UserID'], 2) == "2") { echo " checked"; } ?>> Female<br/>
+                <input type="submit" class="btn btn-primary btn-load btn-sm" data-loading-text="Changing censor..." value="Submit">
+            </form>
+            
+            <br/>
+            
+            <h4 style="color:white;"><b>Change birthday:</b></h4>
+            <form method="post" action="pages/settings.php">
+                <input type="date" name="bday" required><br>
+                <input type="submit" class="btn btn-primary btn-load btn-sm" data-loading-text="Changing birthday..." value="Submit">
             </form>
         </div>
         

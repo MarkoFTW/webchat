@@ -4,13 +4,12 @@ include 'class.php';
 include 'conn.php';
 
 if(isset($_POST['hash'])) {
-    echo $_POST['hash'] . "<br/<br/>";
     $sql = $stmt->prepare("SELECT * FROM private_msg WHERE group_hash = :hash");
     $sql->execute(array(
        "hash" => $_POST['hash'] 
     ));
 
-    $myfile = fopen("chat_data/".$_SESSION['UserID'] . "_" . $_POST['hash'] . "_chatlog.html", "w") or die("Unable to open file!");
+    $file = fopen("chat_data/".$_SESSION['UserID'] . "_" . $_POST['hash'] . "_chatlog.html", "w") or die("Unable to open file!");
     $txt = '<!DOCTYPE html>
     <html>
         <head>
@@ -28,7 +27,7 @@ if(isset($_POST['hash'])) {
             <div id="main">
                 <span style="color:white;font-size: 2em;">Chat history for '.$_POST['hash'].'</span><br/>
                 ';
-    fwrite($myfile, $txt);
+    fwrite($file, $txt);
     
     while($f = $sql->fetch()){
 
@@ -55,16 +54,16 @@ if(isset($_POST['hash'])) {
 
         $txt = "<br/></p><p><a class='pmsg' href='http://devps1.marefx.com/webchat/Home.php?page=profile&view=".replaceID($f['from_id'])."'>".replaceID($f['from_id'])."</a> <span style='font-size: 10px;'>". $datumexpl[2] . " " . $mesec[$datumexpl[1]] . " " . $datumexpl[0] . " @ " . $ura ."</span><br/>".$f['message']."";
     
-        fwrite($myfile, $txt);
+        fwrite($file, $txt);
     }
 
     $txt = '
             </div>
         </body>
     </html>';
-    fwrite($myfile, $txt);
+    fwrite($file, $txt);
 
-    fclose($myfile);
+    fclose($file);
     
     //download file...
     

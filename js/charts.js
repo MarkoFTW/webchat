@@ -22,7 +22,7 @@ $(document).ready(function() {
         },
         tooltip: {
             formatter: function() {
-                return '<b>'+ this.point.name +'</b>: '+ this.percentage +' %';
+                return '<b>'+ this.point.name +'</b>: '+ Highcharts.numberFormat(this.percentage, 2) +' %';
             }
         },
         plotOptions: {
@@ -34,7 +34,7 @@ $(document).ready(function() {
                     color: '#FFFFFF',
                     connectorColor: '#FFFFFF',
                     formatter: function() {
-                        return '<b>'+ this.point.name +'</b>: '+ this.percentage +' %';
+                        return '<b>'+ this.point.name +'</b>: '+ Highcharts.numberFormat(this.percentage, 2) +' %';
                     }
                 }
             }

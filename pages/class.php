@@ -19,7 +19,7 @@ function smileys($msg){//Home.php->class-chat, pmsg.php->class
     $emoteQuery = $stmt->prepare("SELECT * FROM emoticons");
     $emoteQuery->execute();
     while ($emote = $emoteQuery->fetch()) {
-        $msg = str_replace($emote['Emote'],"<img src=./img/smileys/".$emote['Picture']." alt='".$emote['Emote']."' width='30' heigh='30'>",$msg);
+        $msg = str_replace($emote['Emote'],"<img src=./img/smileys/".$emote['Picture']." alt='".$emote['Emote']."' width='20' heigh='20'>",$msg);
     }
     return $msg;
 }
@@ -65,7 +65,7 @@ function last_active($i){ //class
         'id' => $i
     ));
 }
-function replaceID($id){
+function replaceID($id){ // convoDL.php
     include 'conn.php';
     $repl_id = $stmt->prepare("SELECT * FROM users WHERE UserID = :id");
     $repl_id->execute(array(
@@ -470,7 +470,7 @@ class Profile { //profile.php
     }
     public function overGroup($num){
         if($num == 999){
-            return "Owner";
+            return "Developer";
         } elseif($num == 950){
             return "Administrator";
         } elseif($num == 888){
@@ -537,25 +537,35 @@ class Profile { //profile.php
         echo $result['stevilo'];
     }
     
-    public function changeCensor($status){
+    public static function settingsOpt($id, $setting){ //1 = censor , 2 = gender
         include 'conn.php';
-        $c = $stmt->prepare("UPDATE users SET Censor = :status WHERE UserID = :id");
+        $c = $stmt->prepare("SELECT * FROM users WHERE UserID = :id");
+        $c->execute(array(
+            'id' => $id,
+        ));
+        while($r = $c->fetch()){
+            if ($setting == 1){
+                return $r['Censor'];
+            } elseif($setting == 2){
+                return $r['Gender'];
+            }
+        }
+    }
+    
+    public function changeSettings($status, $setting){ //1 = censor , 2 = gender, 3 = birthday
+        include 'conn.php';
+        if ($setting == 1){
+            $c = $stmt->prepare("UPDATE users SET Censor = :status WHERE UserID = :id");
+        } elseif ($setting == 2){
+            $c = $stmt->prepare("UPDATE users SET Gender = :status WHERE UserID = :id");
+        } elseif ($setting == 3){
+            $c = $stmt->prepare("UPDATE users SET Birthday = :status WHERE UserID = :id");
+        }
         $c->execute(array(
             'id' => $this->getUserID2(),
             'status' => $status
         ));
         header("Location: ../Home.php?page=profile&a=settings");
-    }
-    
-    public static function censorOpt($id){
-        include 'conn.php';
-        $c = $stmt->prepare("SELECT Censor FROM users WHERE UserID = :id");
-        $c->execute(array(
-            'id' => $id,
-        ));
-        while($r = $c->fetch()){
-            return $r['Censor'];
-        }
     }
 }
 
