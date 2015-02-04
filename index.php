@@ -68,12 +68,12 @@
             }
 
             if(isset($_SESSION['token'])){
-                    $session = new FacebookSession($_SESSION['token']);
-                    try{
-                            $session->Validate($id, $secret);
-                    }catch(FacebookAuthorizationException $e){
-                            $session = '';
-                    }
+                $session = new FacebookSession($_SESSION['token']);
+                try{
+                    $session->Validate($id, $secret);
+                }catch(FacebookAuthorizationException $e){
+                    $session = '';
+                }
             }
 
             if(isset($session)){
@@ -186,7 +186,6 @@
                     <label>Email:</label>
                     <input type="text" name="Email" placeholder="user@example.com">
                 </p>
-
                 <p>
                     <label>Password:</label>
                     <input type="password" name="Password" value="">
@@ -224,9 +223,7 @@
                   <button type="button" id="loginAcc"><span>Login with existing user</span></button>
                 </p>
             </form>
-        </div>
-        
-            <?php } ?>
-        
+        </div>       
+        <?php } ?>
     </body>
 </html>

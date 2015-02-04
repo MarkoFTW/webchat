@@ -13,6 +13,15 @@
         <script src="js/bootstrap.js"></script>
         <script src="js/functions.js"></script>
         <link rel="stylesheet" href="css/homeStyle.css">
+        <!-- modernizr cdn -->
+        <script src="http://cdn.jsdelivr.net/webshim/1.12.4/extras/modernizr-custom.js"></script>
+        <!-- polyfiller file to detect and load polyfills -->
+        <script src="http://cdn.jsdelivr.net/webshim/1.12.4/polyfiller.js"></script>
+        <script>
+          webshims.setOptions('waitReady', false);
+          webshims.setOptions('forms-ext', {types: 'date'});
+          webshims.polyfill('forms forms-ext');
+        </script>
         <script type="text/javascript">
             $(document).ready(function(){
                 $("#privMsg, #ChatMessages").animate({ scrollTop: "+=5000000" }, "slow");

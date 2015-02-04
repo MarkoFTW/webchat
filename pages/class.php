@@ -205,16 +205,13 @@ class user{
             header("Location: ../index.php?error=1");
             return false;
         } else {
-            while ($data = $req->fetch()) {
-                
+            while ($data = $req->fetch()) {               
                 $this->setUserID($data['UserID']);
                 $this->setUsername($data['Username']);
                 $this->setPassword($data['Password']);
                 $this->setEmail($data['Email']);
-                $this->setType("1");
-                
-                last_active($this->getUserID());
-                
+                $this->setType("1");               
+                last_active($this->getUserID());               
                 header("Location: ../Home.php");
                 return true;
             }
@@ -237,10 +234,8 @@ class user{
                 $this->setUserID($data['UserID']);
                 $this->setUsername($data['Username']);
                 $this->setEmail($data['Email']);
-                $this->setType("2");
-                
-                last_active($this->getUserID());
-                
+                $this->setType("2");               
+                last_active($this->getUserID());               
                 header("Location: Home.php");
                 return true;
             }
@@ -496,7 +491,7 @@ class Profile { //profile.php
             ));
         while($p = $showFull->fetch()){
 
-            $age = floor((time() - strtotime($p['Birthday'])) / 31556926);
+            $age = floor((time() - strtotime($p['Birthday'])) / 31556926); //leto
 
             $dt = explode(" ", $p['Created']);
             $memdt = explode("-", $dt[0]);

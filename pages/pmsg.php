@@ -31,7 +31,7 @@ if(isset($_GET['do']) && $_GET['do'] == "show" && isset($_GET['hash'])){
         $convo->setUserID($_SESSION['UserID']);
         $convo->setMessage($_POST['message']);
         $convo->InsertConvoMsg();
-        header("Location: Home.php?page=private&do=show&hash=". $_GET['hash'] ."");
+        //header('Location: '.$_SERVER['REQUEST_URI']);        
     }
     ?>
     <textarea name="message" rows="7" cols="60" class="privText" id="sendPrivate"></textarea>
