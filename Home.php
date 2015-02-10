@@ -1,3 +1,12 @@
+<?php
+    error_reporting(E_ALL);
+    ini_set("display_errors", 1);
+    ob_start();
+    session_start();
+    if(!isset($_SESSION['UserID']) && empty($_SESSION['UserID'])) {
+        header("Location: index.php");
+    }
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -30,18 +39,11 @@
             });
         </script>
         <?php
-        if($_GET['page'] == "country" || $_GET['page'] == "social"){
+        if(isset($_GET['page']) && $_GET['page'] == "country" || isset($_GET['page']) && $_GET['page'] == "social"){
             echo '<script src="http://code.highcharts.com/highcharts.js"></script>';
             echo '<script src="http://code.highcharts.com/modules/exporting.js"></script>';
             echo '<script src="js/charts.js" type="text/javascript"></script>';
         }
-        ?>
-        
-        <?php
-            session_start();
-            if(!isset($_SESSION['UserID']) && empty($_SESSION['UserID'])) {
-                header("Location: index.php");
-            }
         ?>
     </head>
     <body>
@@ -70,7 +72,7 @@
                             
                         </li>
                         <?php
-                            include 'pages/class.php';
+                            include "pages/class.php";
                             $id = new user();
                             $id->setUserID($_SESSION['UserID']);
                             if($id->CheckAdmin()){
@@ -90,8 +92,7 @@
                         </form>
                     </div>
                     
-                    <ul class="nav navbar-nav navbar-right">
-                        
+                    <ul class="nav navbar-nav navbar-right">                       
                         <?php
                             if(isset($_SESSION['Username'])) {
                                 echo '<li><a href="#" id="UserProfile">Logged in as '. htmlspecialchars($_SESSION['Username']) .'</a></li>';
@@ -106,26 +107,22 @@
                 </div>                
             </div>
         </div>
-        
-        
-        <div class="container" id="ContMove">
-            
+               
+        <div class="container" id="ContMove">          
             <div class="row">
-                
                 <?php
                     if(isset($_GET['page']) && $_GET['page'] == "profile"){
                         include 'pages/profile.php';
                     } elseif(isset($_GET['page']) && $_GET['page'] == "private"){
                         include 'pages/pmsg.php';
-                    } elseif(isset($_GET['page']) && $_GET['page'] == "country" || $_GET['page'] == "social"){
+                    } elseif(isset($_GET['page']) && $_GET['page'] == "country" || isset($_GET['page']) && $_GET['page'] == "social"){
                         include 'pages/stats.php';
                     } elseif(isset($_GET['q'])){
                         include 'pages/searchUsers.php'; 
                     } elseif(isset($_GET['page']) && $_GET['page'] == "admincp"){
                         include 'pages/admincp.php';
                     } else {
-
-                    ?>
+                ?>
                    
                 <div class="col-xs-10">
                     <div id="ChatBig">
@@ -156,3 +153,6 @@
         
     </body>
 </html>
+<?php
+    ob_flush();
+?>

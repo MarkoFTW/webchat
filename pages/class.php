@@ -1,5 +1,4 @@
 <?php
-session_start();
 function BBCodes($text) { //Home.php->class-chat, pmsg.php->class
     $bb_codes = array(
         "/\[u\](.*?)\[\/u\]/is" => "<u>$1</u>",

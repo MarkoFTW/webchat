@@ -73,13 +73,13 @@ if(isset($_POST['hash'])) {
         $fileName = basename($filePath);
         $fileSize = filesize($filePath);
 
-        // Output headers.
+        // output headers
         header("Cache-Control: private");
         header("Content-Type: application/stream");
         header("Content-Length: ".$fileSize);
         header("Content-Disposition: attachment; filename=".$fileName);
 
-        // Output file.
+        // output file
         readfile ($filePath);                   
         exit();
     }

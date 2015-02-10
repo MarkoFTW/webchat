@@ -31,7 +31,7 @@ if(isset($_GET['do']) && $_GET['do'] == "show" && isset($_GET['hash'])){
         $convo->setUserID($_SESSION['UserID']);
         $convo->setMessage($_POST['message']);
         $convo->InsertConvoMsg();
-        //header('Location: '.$_SERVER['REQUEST_URI']);        
+        header('Location: '.$_SERVER['REQUEST_URI']);        
     }
     ?>
     <textarea name="message" rows="7" cols="60" class="privText" id="sendPrivate"></textarea>
@@ -61,7 +61,7 @@ if(isset($_GET['do']) && $_GET['do'] == "show" && isset($_GET['hash'])){
             $convo->CheckValidConvo("yes");
             $convo->InsertConvoMsg();
         } else {
-            //echo "Empty message.";
+            //echo "Empty message";
         }
         ?>
         <textarea name="message" rows="7" cols="60" class="privText" id="sendPrivate1"></textarea>
