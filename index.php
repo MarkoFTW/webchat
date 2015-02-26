@@ -151,7 +151,7 @@
                 </p>
                 <?php
                     if(isset($_GET['error']) && $_GET['error'] == 1){
-                        echo '<p><span style="color:red">Error login</span></p>';
+                        echo '<p><span style="color:red">Login error, email or password does not match</span></p>';
                     }elseif(isset($_GET['error']) && $_GET['error'] == 2){
                         echo '<p><span style="color:red">Error creating account, passwords do not match</span><p>';
                     }elseif(isset($_GET['error']) && $_GET['error'] == 3){

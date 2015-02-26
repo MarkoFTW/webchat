@@ -3,15 +3,11 @@ include '../conn.php';
 
 $Qresult = $stmt->prepare("SELECT Type, count(Type) FROM users GROUP BY Type");
 $Qresult->execute();
-
-
 $category = array();
 $category['name'] = 'LoginType';
-
 $series1 = array();
 $series1['name'] = 'Users';
 
-$rows = array();
 while ($r = $Qresult->fetch()){
     if($r['Type'] == 1){
         $category['data'][] = "Website";

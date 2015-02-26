@@ -1,4 +1,5 @@
 <?php
+session_start();
 function BBCodes($text) { //Home.php->class-chat, pmsg.php->class
     $bb_codes = array(
         "/\[u\](.*?)\[\/u\]/is" => "<u>$1</u>",
@@ -615,7 +616,7 @@ class msgs{
             if($new == "yes") {
                 $this->CreateConvo();
                 echo "<span class='text-center'>Creating new conversation. Message successfully sent!</span><br/>";
-                //header("Location: Home.php?page=private&do=show&hash=" . $this->getHash());
+                header("Location: Home.php?page=private&do=show&hash=" . $this->getHash());
             }
         } else {
             $this->setHash($getHash['hash']);

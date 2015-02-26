@@ -95,12 +95,13 @@ label input[type=password] {
 }
 
 #privMsg{
-    width: 500px;
+    width: 496px;
     height: 400px;
     //background-color: red;
     //border-bottom: 1px solid #333;
     overflow-y: auto;
     margin: 0 auto;
+    margin-left: 360px;
 }
 .privText{
     width: 496px;
@@ -112,12 +113,12 @@ label input[type=password] {
     border: 1px solid PaleTurquoise;
     display: block;
     //margin: 0 auto;
-    margin-left: 260px;
+    margin-left: 360px;
 }
 .inputSend{
     display: block;
     //margin: auto;
-    margin-left: 260px;
+    margin-left: 360px;
     width: 496px;
     //background-color: green;
 }

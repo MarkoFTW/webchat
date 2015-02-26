@@ -10,9 +10,9 @@ function checkDir(){
     if (!file_exists($filename)) {
         mkdir("../img/users/" . $dirname, 0777);
         chmod("../img/users/". $dirname, 0777);
-        echo "The directory $dirname was successfully created.";
+        echo "Folder $dirname was successfully created.";
     } else {
-        echo "The directory $dirname exists.";
+        echo "Folder $dirname exists.";
     }
 }
 

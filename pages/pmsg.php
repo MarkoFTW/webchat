@@ -45,7 +45,7 @@ if(isset($_GET['do']) && $_GET['do'] == "show" && isset($_GET['hash'])){
     } else {
         echo "<div id='shownew'><a href='Home.php?page=private&do=show' class='pmsg'>Show conversations</a> | ";
         echo "<a href='Home.php?page=private&do=new' class='pmsg'>New conversation</a><br/>";
-        echo "Sending message to user ". $_GET['user'] .".</div>";
+        echo "Sending message to ". replaceID($_GET['user']) .".</div>";
             $convo = new msgs();
             $convo->setUserID($_SESSION['UserID']);
             $convo->setRecptID($_GET['user']);
