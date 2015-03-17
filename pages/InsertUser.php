@@ -2,6 +2,7 @@
 
     /*error_reporting(E_ALL);
     ini_set('display_errors', '1');*/
+    session_start();
     include 'class.php';
     
     if(isset($_POST['Username']) && isset($_POST['Email']) && isset($_POST['Password']) && isset($_POST['Password1'])) {

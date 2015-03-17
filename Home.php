@@ -13,6 +13,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <meta charset="UTF-8">
         <title>Webchat - Home</title>
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
         <script src="js/jquery211.js"></script>
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="css/bootstrap.css">

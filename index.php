@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Webchat</title>
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
         <script src="js/jquery211.js" type="text/javascript"></script>
         <link href="css/style.css" type="text/css" rel="stylesheet"/>
         <?php
@@ -60,7 +61,7 @@
 
             FacebookSession::setDefaultApplication($id, $secret);
 
-            $helper = new FacebookRedirectLoginHelper('http://devps1.marefx.com/webchat/index.php');
+            $helper = new FacebookRedirectLoginHelper('http://vps1.marefx.com/webchat/index.php');
             try{
                 $session = $helper->getSessionFromRedirect();
             }catch(Exception $e){
@@ -118,7 +119,7 @@
                     
                     //echo '<pre>' . print_r( $graphObject, 1 ) . '</pre>';
                     
-                    echo "<a href = " . $helper->getLogoutUrl( $session , 'http://devps1.marefx.com/webchat/fb/logout.php' ) . ">Logout</a>";
+                    echo "<a href = " . $helper->getLogoutUrl( $session , 'http://vps1.marefx.com/webchat/fb/logout.php' ) . ">Logout</a>";
                     
                 }catch(FacebookRequestException $e) {
                     echo "Exception occured, code: " . $e->getCode();
@@ -151,9 +152,9 @@
                 </p>
                 <?php
                     if(isset($_GET['error']) && $_GET['error'] == 1){
-                        echo '<p><span style="color:red">Login error, email or password does not match</span></p>';
+                        echo '<p><span style="color:red">Login error: Email or password does not match</span></p>';
                     }elseif(isset($_GET['error']) && $_GET['error'] == 2){
-                        echo '<p><span style="color:red">Error creating account, passwords do not match</span><p>';
+                        echo '<p><span style="color:red">Error creating account: Passwords do not match</span><p>';
                     }elseif(isset($_GET['error']) && $_GET['error'] == 3){
                         echo '<p><span style="color:red">No matching accounts found</span></p>';
                     }elseif(isset($_GET['error']) && $_GET['error'] == 4){
@@ -165,7 +166,7 @@
                     }elseif(isset($_GET['error']) && $_GET['error'] == 7){
                         echo '<p><span style="color:red">Invalid email</span></p>';
                     }elseif(isset($_GET['success']) && $_GET['success'] == 1){
-                        echo '<p><span style="color:green">Registration successfull</span></p>';
+                        echo '<p><span style="color:green">Registration successfull, you can now login</span></p>';
                     }elseif(isset($_GET['success']) && $_GET['success'] == 2){
                         echo '<p><span style="color:green">Password reset successfull, please check your Inbox and Junk folder</span></p>';
                     }

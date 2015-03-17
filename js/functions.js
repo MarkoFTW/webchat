@@ -1,5 +1,12 @@
 $(document).ready(function(){
 
+    $('li').each(function(){
+        if(window.location.href.indexOf($(this).find('a:first').attr('href'))>-1){
+            $(this).addClass('active').siblings().removeClass('active');
+        }
+    });
+
+
     $("#ChatText, #sendPrivate, #sendPrivate1").focus();
 
     $.urlParam = function(name){
